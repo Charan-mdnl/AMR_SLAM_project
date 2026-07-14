@@ -138,3 +138,55 @@ The central lift carriage (Section 3) is limited to a lift height of $\sim 100\t
 | **Mast Guide Rollers** | local supplier / Sealed Ball | Dia 110mm, hardened outer race, double-sealed | Guide wheels that slide inside C-channels under bending moments |
 | **Chain Sheaves (Pulleys)** | Custom / Dia 120mm | Cast iron core, deep groove, needle roller bearings | Guides the leaf chains at the top of the inner mast stage |
 | **Wear Pads** | local supplier / Nylon-66 | Self-lubricating wear plates, low friction | Prevents metal-to-metal friction between nested mast channels |
+
+---
+
+## 5. Tusk Pallet AMR Product Showcase (Real Product Models)
+
+This section showcases the real-world industrial models developed by Tusk Robots, demonstrating their physical outlines, configurations, and intended operational applications.
+
+### A. Model E10 / E10D (Standard Low-Profile Pallet AMR)
+The standard E10 is the flagship autonomous pallet handling robot designed for open-bottom pallets (like EUR-1). It rides fully underneath the pallet, keeping a ultra-low outline only slightly wider than the load itself.
+* **Payload Capacity:** 1000 kg
+* **Self-Weight:** 330 kg
+* **Navigation:** Laser SLAM + QR code hybrid
+* **Real Product Image:**
+![Real Tusk E10 / E10D Standard Low-Profile Pallet AMR Product Photo](model_e10.png)
+
+---
+
+### B. Model E10T (Telescopic Extending Fork AMR)
+The E10T is specifically configured with the telescopic extending fork mechanism (Section 1) and retractable load rollers (Section 2). It is designed to handle closed-bottom or double-sided pallets (like EUR-2) in narrow aisles by extending its forks while the main chassis remains stationary.
+* **Payload Capacity:** 1000 kg
+* **Extension Range:** Up to 1400 mm
+* **Forks:** Adjustable width and motorized folding load wheels
+* **Real Product Image:**
+![Real Tusk E10T Telescopic Extending Fork Pallet AMR Product Photo](model_e10t.png)
+
+---
+
+### C. Model T10 (Split-Fork Pallet AMR)
+The T10 is a specialized split-fork layout where the two forks are separated by a central gap, designed for handling heavy bottom-board pallet configurations (like the "田" shaped pallet) in tight cross-docking operations.
+* **Payload Capacity:** 1000 kg
+* **Chassis Width:** Compact for narrow lanes
+* **Real Product Image:**
+![Real Tusk T10 Split-Fork Pallet AMR Product Photo](model_t10.png)
+
+---
+
+### D. Model FL10 (High Stacker Robot)
+The FL10 is a mast-type forklift stacker robot designed for lifting pallets into vertical storage racks and performing double-layer stacking in warehouse lanes.
+* **Payload Capacity:** 1000 kg
+* **Lifting Height:** 2.0 m to 2.5 m (double-stage mast)
+* **Aisle Width:** Operates in lanes as narrow as 1.8 m
+* **Real Product Image:**
+![Real Tusk FL10 Mast-Type High Stacker Forklift Robot Product Photo](model_fl10.png)
+
+---
+
+### E. Model C10 (Underride Tugger AMR)
+The C-series represents underride tugger robots. The C10 rolls underneath custom wheeled cargo carts, locks onto them with an automated lifting pin, and tugs them throughout the factory floor.
+* **Tugging/Lifting Capacity:** 1000 kg
+* **Application:** Materials delivery, trolley cart towing, assembly lines
+* **Real Product Image:**
+![Real Tusk C10 Underride Tugger Mobile Robot Product Photo](model_c10.png)
