@@ -60,7 +60,7 @@ As sketched on the right page of the notebook, the wheel layout utilizes:
 
 ## 3. A-to-Z Mechanism & Hardware Details
 
-To keep the forks extremely thin ($65 \text{ mm}$ thickness) and prevent synchronization errors, the E10T uses a **unified carriage lift and fork extension architecture** rather than duplicate mechanisms in each fork.
+To keep the forks extremely thin (65 mm thickness) and prevent synchronization errors, the E10T uses a **unified carriage lift and fork extension architecture** rather than duplicate mechanisms in each fork.
 
 ### 3.1. Single-Motor Vertical Lift Carriage
 Instead of duplicate motors and scissor lifts inside each fork, the entire fork carriage assembly is lifted vertically as a single unit on the front of the chassis base:
@@ -71,7 +71,7 @@ Instead of duplicate motors and scissor lifts inside each fork, the entire fork 
 ---
 
 ### 3.2. Telescopic Fork Extension Guide Rails
-To pick up a pallet, the forks must extend forward out of the carriage by $1000\text{ to }1400 \text{ mm}$. Because the forks carry a cantilevered load of up to 1 ton ($1000 \text{ kg}$) before the front load rollers contact the floor, the guide rails must withstand immense bending moments.
+To pick up a pallet, the forks must extend forward out of the carriage by 1000 to 1400 mm. Because the forks carry a cantilevered load of up to 1 ton (1000 kg) before the front load rollers contact the floor, the guide rails must withstand immense bending moments.
 
 #### Component Selection & Operation:
 * **Telescopic Linear Guide Rails:** The robot uses heavy-duty, multi-stage industrial telescopic slides. These rails consist of an intermediate S-shaped steel profile and two sliding guide rails with ball cages, allowing for **over-extension** (the forks can extend more than 100% of their retracted length).
@@ -108,7 +108,7 @@ The E10T uses a **passive retractable load roller mechanism** at the front tip o
 ```
 
 #### Operational Sequence:
-1. **Approach & Insertion (Forks Extend, Wheels UP):** As the telescopic forks extend and slide into the pallet, the front load rollers are **folded up** completely inside the $65\text{ mm}$ fork frame. This allows the forks to slide over the pallet's bottom boards without collision.
+1. **Approach & Insertion (Forks Extend, Wheels UP):** As the telescopic forks extend and slide into the pallet, the front load rollers are **folded up** completely inside the 65 mm fork frame. This allows the forks to slide over the pallet's bottom boards without collision.
 2. **Deployment & Lift (Wheels DOWN):** Once the forks are fully inserted, the central lift carriage begins to rise. A mechanical pull-rod linkage running inside the fork channel connects the front roller swingarm to the lifting carriage frame. As the carriage lifts relative to the chassis wheels, the linkage pushes the swingarm **downwards** through the gaps in the bottom boards to contact the floor.
 3. **Synchronization:** This mechanical linkage ensures that the front wheels deploy at the exact same rate the rear carriage lifts, keeping the forks level and stable throughout the lifting sequence.
 
@@ -118,7 +118,7 @@ The E10T uses a **passive retractable load roller mechanism** at the front tip o
 To handle different pallet widths (EUR-1: 800mm, EUR-2: 1000mm), the width span of the forks adjusts dynamically:
 * **Transverse Linear Guides:** The base of each telescopic fork is mounted on linear guide carriages (e.g., Hiwin HGW20CC) on a transverse rail fixed to the front face of the carriage.
 * **Differential Lead Screw:** A transverse lead screw runs through both fork bases. One half of the screw has left-handed threads, and the other has right-handed threads.
-* **Width Adjust Motor:** A 24V DC geared motor with an encoder rotates the screw, sliding both forks symmetrically inward or outward between $550 \text{ mm}$ and $900 \text{ mm}$.
+* **Width Adjust Motor:** A 24V DC geared motor with an encoder rotates the screw, sliding both forks symmetrically inward or outward between 550 mm and 900 mm.
 
 ---
 

@@ -21,7 +21,7 @@ The standard E10 is the flagship autonomous pallet handling robot designed for o
 ### Core Mechanical Systems
 
 #### A. Central Vertical Lift Carriage Mechanism
-Rather than having separate scissor lifts and motors inside each individual fork, the E10 uses a single centralized lift carriage on the front face of the chassis to raise and lower the fork carrier plate. This keeps the forks extremely thin ($65 \text{ mm}$), eliminates the need for synchronization logic, and reduces weight.
+Rather than having separate scissor lifts and motors inside each individual fork, the E10 uses a single centralized lift carriage on the front face of the chassis to raise and lower the fork carrier plate. This keeps the forks extremely thin (65 mm), eliminates the need for synchronization logic, and reduces weight.
 
 * **How It Works:**
   1. Two vertical linear profile rails are mounted on the front plate of the robot chassis.
@@ -59,7 +59,7 @@ For the standard E10 (fixed-length forks), a passive mechanical pull-rod is used
 | **Tandem Load Rollers** | Blickle / Dia 60mm | Polyurethane tread on steel core, needle bearings, 350kg capacity each | Support wheels that roll on the warehouse floor under the pallet |
 | **Pivot Swingarm (Bogie)**| Custom Weldment | Cast steel (45#), precision-machined pivot holes | Houses the tandem rollers and rotates relative to the fork tyne |
 | **Actuation Pull-Rods** | Custom Turnbuckle | High-tensile steel rods (M16 threads) for length calibration (E10 standard specific) | Transmits vertical carriage motion to the front pivot swingarms |
-| **Return Tension Springs**| local supplier / 1.5mm wire | Spring steel, rate $25\text{ N/mm}$, length 150mm | Pulls the swingarms back into the folded position when unloaded |
+| **Return Tension Springs**| local supplier / 1.5mm wire | Spring steel, rate 25 N/mm, length 150mm | Pulls the swingarms back into the folded position when unloaded |
 | **Pivot Pins & Bushings** | MIsumi / Hardened Steel | Dia 20mm, self-lubricating bronze bushings | High-load joints for swingarm and pull-rod linkages |
 
 ---
@@ -79,13 +79,13 @@ The E10T is configured with telescopic extending forks for narrow aisles, design
 ### Core Mechanical Systems
 
 #### A. Telescopic Extending Fork Mechanism
-This mechanism allows the forks to slide out forward from the lift carriage into the pallet openings while the AMR remains stationary, cutting pick aisle requirements to just $2.0 \text{ m}$.
+This mechanism allows the forks to slide out forward from the lift carriage into the pallet openings while the AMR remains stationary, cutting pick aisle requirements to just 2.0 m.
 * **How It Works:**
   1. A single 24V 200W geared servo motor is mounted on the lift carriage.
   2. This motor drives a transverse splined shaft.
   3. Two chain drive sprockets slide along the splined shaft when the fork width adjusts, but rotate with it.
   4. Each fork channel contains a dual-stage **multi-stage industrial** telescopic guide slide rail and a closed-loop leaf chain.
-  5. When the motor rotates the splined shaft, the chain loops pull the intermediate and outer stages of the telescopic slides forward, extending the forks by up to $1400\text{ mm}$ (over-extension).
+  5. When the motor rotates the splined shaft, the chain loops pull the intermediate and outer stages of the telescopic slides forward, extending the forks by up to 1400 mm (over-extension).
 * **Diagram:**
 ![Telescopic Robotic Fork Assembly Schematic Diagram](telescopic_fork.png)
 
@@ -113,7 +113,7 @@ Because the forks extend telescopically, a rigid pull-rod is impossible. The E10
 | **Pivot Swingarm (Bogie)**| Custom Weldment | Cast steel (45#), precision-machined pivot holes | Houses the tandem rollers and rotates relative to the fork tyne |
 | **Electric Linear Actuator** | local supplier / 24V DC | Compact high-force linear actuator; 50mm stroke; thrust 2500 N (E10T specific) | Mounts inside telescopic fork tip to push/pull swingarm directly |
 | **Flexible Drag Chain** | Premium Brand / Cable Track | Miniature plastic energy chain; minimum bending radius 28mm (E10T specific) | Routes actuator power and sensor cables inside telescopic stages |
-| **Return Tension Springs**| local supplier / 1.5mm wire | Spring steel, rate $25\text{ N/mm}$, length 150mm | Pulls the swingarms back into the folded position when unloaded |
+| **Return Tension Springs**| local supplier / 1.5mm wire | Spring steel, rate 25 N/mm, length 150mm | Pulls the swingarms back into the folded position when unloaded |
 | **Pivot Pins & Bushings** | Misumi / Hardened Steel | Dia 20mm, self-lubricating bronze bushings | High-load joints for swingarm and pull-rod/actuator linkages |
 
 ---
@@ -133,21 +133,21 @@ The FL10 is a mast-type forklift stacker robot designed for lifting pallets into
 ### Core Mechanical Systems
 
 #### A. Nested Mast Lift Mechanism
-The FL10 requires lifting pallets up to $2.5 \text{ m}$ for double-layer stacking in warehouse racks. This requires a nested telescoping mast structure.
+The FL10 requires lifting pallets up to 2.5 m for double-layer stacking in warehouse racks. This requires a nested telescoping mast structure.
 * **How It Works:**
   1. Outer C-channel steel masts are fixed to the robot chassis.
   2. Inner C-channel masts slide vertically inside the outer masts on sealed guide rollers.
   3. A central hydraulic cylinder or an electric motor-driven leaf chain lift is actuated.
   4. The piston rod pushes the inner mast upward.
   5. Leaf chains anchored to the outer mast run over sheaves at the top of the inner mast and attach to the fork carriage.
-  6. This 2:1 mechanical ratio lifts the fork carriage at twice the speed of the inner mast extension, reaching a lift height of $2500 \text{ mm}$.
+  6. This 2:1 mechanical ratio lifts the fork carriage at twice the speed of the inner mast extension, reaching a lift height of 2500 mm.
 * **Diagram:**
 ![Nested Mast Forklift Stacker Lifting Mechanism Schematic Diagram](mast_lift.png)
 
 * **Component Specifications:**
 | Component Name | Manufacturer / Model | Specifications | Function / Purpose |
 | :--- | :--- | :--- | :--- |
-| **Nested Mast Channels** | Custom / C-profile | High-strength steel Q345; $180\times70\times10\text{ mm}$ outer channel | Main structural guide channels for high-reach lifting |
+| **Nested Mast Channels** | Custom / C-profile | High-strength steel Q345; 180 x 70 x 10 mm outer channel | Main structural guide channels for high-reach lifting |
 | **Leaf Chains** | local supplier / Heavy-Duty | Heavy-duty forklift leaf chains; pitch 15.875mm; tensile strength 80 kN | Suspends the carriage and transmits the 2:1 lifting force |
 | **Lifting Cylinder** | Custom / Hydraulic | 80mm bore, 1200mm stroke, chrome-plated piston rod | Pushes the inner mast vertically (for hydraulic lift versions) |
 | **Mast Guide Rollers** | local supplier / Sealed Ball | Dia 110mm, hardened outer race, double-sealed | Guide wheels that slide inside C-channels under bending moments |
