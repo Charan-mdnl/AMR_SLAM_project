@@ -64,8 +64,8 @@ To keep the forks extremely thin ($65 \text{ mm}$ thickness) and prevent synchro
 
 ### 3.1. Single-Motor Vertical Lift Carriage
 Instead of duplicate motors and scissor lifts inside each fork, the entire fork carriage assembly is lifted vertically as a single unit on the front of the chassis base:
-* **Vertical Guide Rails:** Two heavy-duty vertical linear profile rails (e.g., Hiwin HGR25, L=500mm) are mounted on the front face of the chassis base. The carriage weldment slides along these rails using four flanged blocks.
-* **Central Ball Screw Actuation:** A single high-capacity vertical ball screw (SFU2505, L=400mm) is mounted centrally.
+* **Vertical Guide Rails:** Two heavy-duty vertical linear profile rails (e.g., heavy-duty linear guide rails, L=500mm) are mounted on the front face of the chassis base. The carriage weldment slides along these rails using four flanged blocks.
+* **Central Ball Screw Actuation:** A single high-capacity vertical ball screw (25mm diameter, 5mm pitch, L=400mm) is mounted centrally.
 * **Actuation:** A single 1000W BLDC motor with a 1:15 planetary gearbox drives the ball screw. Rotating the screw raises or lowers the entire carriage, ensuring both forks lift in perfect synchronization with zero risk of tilt.
 
 ---
@@ -74,7 +74,7 @@ Instead of duplicate motors and scissor lifts inside each fork, the entire fork 
 To pick up a pallet, the forks must extend forward out of the carriage by $1000\text{ to }1400 \text{ mm}$. Because the forks carry a cantilevered load of up to 1 ton ($1000 \text{ kg}$) before the front load rollers contact the floor, the guide rails must withstand immense bending moments.
 
 #### Component Selection & Operation:
-* **Telescopic Linear Guide Rails:** The robot uses heavy-duty, multi-stage industrial telescopic slides (such as **Rollon DSS43** series). These rails consist of an intermediate S-shaped steel profile and two sliding guide rails with ball cages, allowing for **over-extension** (the forks can extend more than 100% of their retracted length).
+* **Telescopic Linear Guide Rails:** The robot uses heavy-duty, multi-stage industrial telescopic slides. These rails consist of an intermediate S-shaped steel profile and two sliding guide rails with ball cages, allowing for **over-extension** (the forks can extend more than 100% of their retracted length).
 * **Single-Motor Synchronized Drive:** A single 24V 200W geared servo motor is mounted on the lift carriage. It drives a transverse splined shaft. The drive sprockets for both forks' extension chains slide along this splined shaft during width adjustment, but rotate with it. This extends both forks in perfect synchronization with only one motor.
 
 ---

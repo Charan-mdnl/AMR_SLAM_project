@@ -26,7 +26,7 @@ Rather than having separate scissor lifts and motors inside each individual fork
 * **How It Works:**
   1. Two vertical linear profile rails are mounted on the front plate of the robot chassis.
   2. The vertical lift carriage plate slides vertically along these rails.
-  3. A single vertical ball screw (TBI SFU2505, $5 \text{ mm}$ lead) is mounted centrally.
+  3. A single vertical ball screw (25mm diameter, 5mm lead) is mounted centrally.
   4. A 1000W BLDC motor with a 1:15 gearbox is mounted at the top, coupled to the ball screw.
   5. When the motor rotates the ball screw, the ball nut pushes the carriage vertically, lifting both forks, the telescopic slides, and the load simultaneously.
 * **Diagram:**
@@ -35,8 +35,8 @@ Rather than having separate scissor lifts and motors inside each individual fork
 * **Component Specifications:**
 | Component Name | Manufacturer / Model | Specifications | Function / Purpose |
 | :--- | :--- | :--- | :--- |
-| **Vertical Linear Guides** | Hiwin / HGR25 | Profile linear guide rails, L=500mm, carbon steel | Provides rigid vertical guidance and prevents carriage twisting |
-| **Vertical Ball Screw** | TBI Motion / SFU2505 | Dia 25mm, 5mm lead, C7 accuracy, ball screw nut | Transforms motor rotation into high-force vertical linear motion |
+| **Vertical Linear Guides** | Premium Brand / Heavy-Duty | Profile linear guide rails, L=500mm, carbon steel | Provides rigid vertical guidance and prevents carriage twisting |
+| **Vertical Ball Screw** | Premium Brand / Precision Ball Screw | Dia 25mm, 5mm lead, C7 accuracy, ball screw nut | Transforms motor rotation into high-force vertical linear motion |
 | **BLDC Lift Motor** | Leadshine / 48V 1000W | Brushless DC motor; rated speed 3000 RPM; electromagnetic brake | Power source for lifting the 1-ton carriage assembly |
 | **Planetary Gearbox** | local supplier / 1:15 ratio | Inline planetary gearbox; backlash < 8 arc-min; efficiency 95% | Multiplies motor torque to overcome vertical gravitational load |
 | **Carriage Plate** | Custom CNC | 8mm A36 steel plate, precision welded | Mounts the forks, width slides, and telescopic extenders |
@@ -84,7 +84,7 @@ This mechanism allows the forks to slide out forward from the lift carriage into
   1. A single 24V 200W geared servo motor is mounted on the lift carriage.
   2. This motor drives a transverse splined shaft.
   3. Two chain drive sprockets slide along the splined shaft when the fork width adjusts, but rotate with it.
-  4. Each fork channel contains a dual-stage **Rollon DSS43** telescopic guide slide rail and a closed-loop leaf chain.
+  4. Each fork channel contains a dual-stage **multi-stage industrial** telescopic guide slide rail and a closed-loop leaf chain.
   5. When the motor rotates the splined shaft, the chain loops pull the intermediate and outer stages of the telescopic slides forward, extending the forks by up to $1400\text{ mm}$ (over-extension).
 * **Diagram:**
 ![Telescopic Robotic Fork Assembly Schematic Diagram](telescopic_fork.png)
@@ -92,10 +92,10 @@ This mechanism allows the forks to slide out forward from the lift carriage into
 * **Component Specifications:**
 | Component Name | Manufacturer / Model | Specifications | Function / Purpose |
 | :--- | :--- | :--- | :--- |
-| **Telescopic Slides** | Rollon / DSS43-1170 | Heavy-duty multi-stage linear slides; over-extension up to 1400mm; Q235 steel | Supports high vertical cantilever loads during fork extension |
+| **Telescopic Slides** | Premium Brand / Heavy-Duty Slides | Heavy-duty multi-stage linear slides; over-extension up to 1400mm; Q235 steel | Supports high vertical cantilever loads during fork extension |
 | **Geared Drive Motor** | Leadshine / 24V 200W | Brushless DC geared servo motor; torque 2.5 Nm; integrated encoder | Actuates the transverse splined shaft to slide forks in/out |
 | **Splined Drive Shaft** | Custom / Dia 25mm | High-tensile steel (40Cr), hardened spline profile | Transmits motor torque to sliding sprockets across adjustable width |
-| **Leaf Chains & Sprockets** | local supplier / Type BL546 | High-strength leaf chains, Z15 sprockets | Pulls the telescopic slide stages forward and backward |
+| **Leaf Chains & Sprockets** | local supplier / High-Strength | High-strength leaf chains, Z15 sprockets | Pulls the telescopic slide stages forward and backward |
 | **Proximity Sensors** | Sick / M12 Inductive | 4mm sensing range; NPN NO; IP67 | Detects home, mid-stage, and full-extension positions |
 
 #### B. Motorized Actuator Wheel Folding Mechanism
@@ -112,7 +112,7 @@ Because the forks extend telescopically, a rigid pull-rod is impossible. The E10
 | **Tandem Load Rollers** | Blickle / Dia 60mm | Polyurethane tread on steel core, needle bearings, 350kg capacity each | Support wheels that roll on the warehouse floor under the pallet |
 | **Pivot Swingarm (Bogie)**| Custom Weldment | Cast steel (45#), precision-machined pivot holes | Houses the tandem rollers and rotates relative to the fork tyne |
 | **Electric Linear Actuator** | local supplier / 24V DC | Compact high-force linear actuator; 50mm stroke; thrust 2500 N (E10T specific) | Mounts inside telescopic fork tip to push/pull swingarm directly |
-| **Flexible Drag Chain** | Igus / E2 Micro series | Miniature plastic energy chain; minimum bending radius 28mm (E10T specific) | Routes actuator power and sensor cables inside telescopic stages |
+| **Flexible Drag Chain** | Premium Brand / Cable Track | Miniature plastic energy chain; minimum bending radius 28mm (E10T specific) | Routes actuator power and sensor cables inside telescopic stages |
 | **Return Tension Springs**| local supplier / 1.5mm wire | Spring steel, rate $25\text{ N/mm}$, length 150mm | Pulls the swingarms back into the folded position when unloaded |
 | **Pivot Pins & Bushings** | Misumi / Hardened Steel | Dia 20mm, self-lubricating bronze bushings | High-load joints for swingarm and pull-rod/actuator linkages |
 
@@ -137,7 +137,7 @@ The FL10 requires lifting pallets up to $2.5 \text{ m}$ for double-layer stackin
 * **How It Works:**
   1. Outer C-channel steel masts are fixed to the robot chassis.
   2. Inner C-channel masts slide vertically inside the outer masts on sealed guide rollers.
-  3. A central hydraulic cylinder or an electric motor-driven leaf chain lift (LH1044) is actuated.
+  3. A central hydraulic cylinder or an electric motor-driven leaf chain lift is actuated.
   4. The piston rod pushes the inner mast upward.
   5. Leaf chains anchored to the outer mast run over sheaves at the top of the inner mast and attach to the fork carriage.
   6. This 2:1 mechanical ratio lifts the fork carriage at twice the speed of the inner mast extension, reaching a lift height of $2500 \text{ mm}$.
@@ -148,7 +148,7 @@ The FL10 requires lifting pallets up to $2.5 \text{ m}$ for double-layer stackin
 | Component Name | Manufacturer / Model | Specifications | Function / Purpose |
 | :--- | :--- | :--- | :--- |
 | **Nested Mast Channels** | Custom / C-profile | High-strength steel Q345; $180\times70\times10\text{ mm}$ outer channel | Main structural guide channels for high-reach lifting |
-| **Leaf Chains** | local supplier / LH1044 | Heavy-duty forklift leaf chains; pitch 15.875mm; tensile strength 80 kN | Suspends the carriage and transmits the 2:1 lifting force |
+| **Leaf Chains** | local supplier / Heavy-Duty | Heavy-duty forklift leaf chains; pitch 15.875mm; tensile strength 80 kN | Suspends the carriage and transmits the 2:1 lifting force |
 | **Lifting Cylinder** | Custom / Hydraulic | 80mm bore, 1200mm stroke, chrome-plated piston rod | Pushes the inner mast vertically (for hydraulic lift versions) |
 | **Mast Guide Rollers** | local supplier / Sealed Ball | Dia 110mm, hardened outer race, double-sealed | Guide wheels that slide inside C-channels under bending moments |
 | **Chain Sheaves (Pulleys)** | Custom / Dia 120mm | Cast iron core, deep groove, needle roller bearings | Guides the leaf chains at the top of the inner mast stage |
