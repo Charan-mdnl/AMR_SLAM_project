@@ -1,104 +1,38 @@
-# Pallet AMR Mechanisms & Components Report
+# Pallet AMR Models & Mechanical Systems Report
 
-This engineering document details the core mechanical systems, kinematics, operational logic, and specific component selections used in different versions of the low-profile Autonomous Pallet-handling Robot (APR) family (specifically E10T, E10 standard, and FL10). 
+This engineering report details the product families, mechanical subsystems, kinematics, and component specifications for different versions of the low-profile Autonomous Pallet-handling Robot (APR) family developed by Tusk Robots. 
 
-For each mechanism, we outline **What it is**, **Why it is used**, **How it works**, and compile a **Component Specification Table**.
-
----
-
-## 1. Telescopic Extending Fork Mechanism (Model: E10T)
-
-### What It Is
-A multi-stage, motorized horizontal fork extension system that allows the robot's load-bearing forks to slide out forward from the lift carriage into the pallet openings.
-
-### Why It Is Used
-Traditional AGVs must drive their entire chassis forward to insert forks under a pallet, requiring large clearance areas. The telescopic extending fork allows the robot to remain stationary in a narrow aisle and slide only its forks forward under the pallet. This reduces the aisle width requirement for picking and placing to just $2.0 \text{ m}$.
-
-### How It Works
-1. A single 24V 200W geared servo motor is mounted on the lift carriage.
-2. This motor drives a transverse splined shaft.
-3. Two chain drive sprockets slide along the splined shaft when the fork width adjusts, but rotate with it.
-4. Each fork channel contains a dual-stage **Rollon DSS43** telescopic guide slide rail and a closed-loop leaf chain.
-5. When the motor rotates the splined shaft, the chain loops pull the intermediate and outer stages of the telescopic slides forward, extending the forks by up to $1400\text{ mm}$ (over-extension).
-
-### Diagram
-![Telescopic Robotic Fork Assembly Schematic Diagram](telescopic_fork.png)
-
-### Components Used for Telescopic Fork Mechanism
-| Component Name | Manufacturer / Model | Specifications | Function / Purpose |
-| :--- | :--- | :--- | :--- |
-| **Telescopic Slides** | Rollon / DSS43-1170 | Heavy-duty multi-stage linear slides; over-extension up to 1400mm; Q235 steel | Supports high vertical cantilever loads during fork extension |
-| **Geared Drive Motor** | Leadshine / 24V 200W | Brushless DC geared servo motor; torque 2.5 Nm; integrated encoder | Actuates the transverse splined shaft to slide forks in/out |
-| **Splined Drive Shaft** | Custom / Dia 25mm | High-tensile steel (40Cr), hardened spline profile | Transmits motor torque to sliding sprockets across adjustable width |
-| **Leaf Chains & Sprockets** | local supplier / Type BL546 | High-strength leaf chains, Z15 sprockets | Pulls the telescopic slide stages forward and backward |
-| **Proximity Sensors** | Sick / M12 Inductive | 4mm sensing range; NPN NO; IP67 | Detects home, mid-stage, and full-extension positions |
+The document is organized **by robot model**, outlining each version's design intent, real-world appearance, core mechanical mechanisms, and component tables.
 
 ---
 
-## 2. Retractable / Folding Load Roller Mechanism (E10T vs. E10 Standard)
+## 1. Model E10 / E10D (Standard Low-Profile Pallet AMR)
 
-### What It Is
-A pivot swingarm assembly at the front tip of each fork that retracts the load rollers vertically up into the fork body or deploys them down to the warehouse floor.
+The standard E10 is the flagship autonomous pallet handling robot designed for open-bottom pallets (like EUR-1). It is designed to slide fully underneath the pallet, keeping a low outline only slightly wider than the load itself.
 
-### Why It Is Used
-Double-sided pallets (such as EUR-2 and "田" shaped pallets) have closed bottom boards. A standard pallet wheel cannot roll over them without crashing. 
-* **During Fork Travel/Extension (Wheels UP):** The rollers remain folded **UP** inside the fork thickness ($65 \text{ mm}$) so the forks can slide over the bottom boards of the pallet without collision. The forks extend suspended in the air (cantilevered), carrying only their own light weight, which the telescopic slides support easily.
-* **During Lifting & Transit (Wheels DOWN):** Once the forks are fully inserted (so the wheels are directly over a gap in the pallet's bottom boards), the wheels deploy **DOWN** to contact the floor. The lift carriage then raises, and the wheels support the heavy 1-ton payload, transforming the cantilevered forks into simple supported beams.
+### Real Product Photo
+![Real Tusk E10 / E10D Standard Low-Profile Pallet AMR Product Photo](model_e10.png)
 
-### How It Works (Telescopic Forks vs. Fixed Forks)
+### Key Specifications
+* **Payload Capacity:** 1000 kg
+* **Self-Weight:** 330 kg
+* **Navigation:** Laser SLAM + QR code hybrid
 
-Because the E10T forks extend telescopically by $1400\text{ mm}$, a rigid mechanical pull-rod connecting the tip wheel to the chassis carriage is impossible (it would bind or restrict extension). Therefore, two different actuation methods are used depending on the AMR model:
+### Core Mechanical Systems
 
-#### A. Telescopic Extending Fork (Model: E10T) - Motorized Actuation
-1. A **compact, high-force 24V electric linear actuator** (or a miniature hydraulic cylinder) is mounted directly inside the tip of the outer fork stage.
-2. Electrical power and control cables are routed from the main carriage to the actuator through a **flexible plastic drag chain (cable track)** that bends and nests inside the telescopic slide stages.
-3. During extension, the actuator is kept fully retracted, holding the Bogie swingarm **UP** inside the fork cavity.
-4. When the fork reaches full extension (detected by proximity sensors), the controller sends a 24V signal to the linear actuator, extending its piston shaft.
-5. This pushes the bogie swingarm **DOWN** through the gaps in the bottom boards of the pallet until the polyurethane rollers contact the floor.
+#### A. Central Vertical Lift Carriage Mechanism
+Rather than having separate scissor lifts and motors inside each individual fork, the E10 uses a single centralized lift carriage on the front face of the chassis to raise and lower the fork carrier plate. This keeps the forks extremely thin ($65 \text{ mm}$), eliminates the need for synchronization logic, and reduces weight.
 
-#### B. Fixed-Length Fork (Model: E10 Standard) - Passive Pull-Rod Linkage
-1. Inside the hollow channel of each fixed fork runs a rigid **mechanical pull-rod**.
-2. The front end of the pull-rod is pinned to the Bogie swingarm holding the tandem load rollers.
-3. The rear end of the pull-rod is pinned to a lever on the vertical lift carriage frame.
-4. When the carriage is at its lowest position, the linkage pulls the rod back, rotating the swingarm **UP** to fold the rollers inside the fork cavity.
-5. As the carriage begins to rise, the linkage pushes the rod forward, forcing the swingarm to rotate **DOWN** to contact the floor.
-
-### Diagram
-![Folding Load Roller Mechanism Schematic Diagram](folding_wheel.png)
-
-### Components Used for Folding Wheel Mechanism
-| Component Name | Manufacturer / Model | Specifications | Function / Purpose |
-| :--- | :--- | :--- | :--- |
-| **Tandem Load Rollers** | Blickle / Dia 60mm | Polyurethane tread on steel core, needle bearings, 350kg capacity each | Support wheels that roll on the warehouse floor under the pallet |
-| **Pivot Swingarm (Bogie)**| Custom Weldment | Cast steel (45#), precision-machined pivot holes | Houses the tandem rollers and rotates relative to the fork tyne |
-| **Electric Linear Actuator** | local supplier / 24V DC | Compact high-force linear actuator; 50mm stroke; thrust 2500 N (E10T specific) | Mounts inside telescopic fork tip to push/pull swingarm directly |
-| **Flexible Drag Chain** | Igus / E2 Micro series | Miniature plastic energy chain; minimum bending radius 28mm (E10T specific) | Routes actuator power and sensor cables inside telescopic stages |
-| **Actuation Pull-Rods** | Custom Turnbuckle | High-tensile steel rods (M16 threads) for length calibration (E10 standard specific) | Transmits vertical carriage motion to the front pivot swingarms |
-| **Return Tension Springs**| local supplier / 1.5mm wire | Spring steel, rate $25\text{ N/mm}$, length 150mm | Pulls the swingarms back into the folded position when unloaded |
-| **Pivot Pins & Bushings** | Misumi / Hardened Steel | Dia 20mm, self-lubricating bronze bushings | High-load joints for swingarm and pull-rod/actuator linkages |
-
----
-
-## 3. Central Vertical Lift Carriage Mechanism (Models: E10, E10T)
-
-### What It Is
-A single-motor vertical slide carriage mounted on the front face of the AMR chassis that raises and lowers the entire fork carrier assembly.
-
-### Why It Is Used
-Rather than having separate scissor lifts and motors inside each fork (which increases weight, complexity, and fork thickness), the E10T uses a single central carriage lift. This keeps the forks extremely thin, eliminates the need for motor synchronization algorithms, and reduces cost.
-
-### How It Works
-1. Two vertical linear profile rails are mounted on the front plate of the robot chassis.
-2. The vertical lift carriage plate slides vertically along these rails.
-3. A single vertical ball screw (TBI SFU2505, $5 \text{ mm}$ lead) is mounted centrally.
-4. A 1000W BLDC motor with a 1:15 gearbox is mounted at the top, coupled to the ball screw.
-5. When the motor rotates the ball screw, the ball nut pushes the carriage vertically, lifting both forks, the telescopic slides, and the load simultaneously.
-6. High and low inductive proximity sensors detect limits.
-
-### Diagram
+* **How It Works:**
+  1. Two vertical linear profile rails are mounted on the front plate of the robot chassis.
+  2. The vertical lift carriage plate slides vertically along these rails.
+  3. A single vertical ball screw (TBI SFU2505, $5 \text{ mm}$ lead) is mounted centrally.
+  4. A 1000W BLDC motor with a 1:15 gearbox is mounted at the top, coupled to the ball screw.
+  5. When the motor rotates the ball screw, the ball nut pushes the carriage vertically, lifting both forks, the telescopic slides, and the load simultaneously.
+* **Diagram:**
 ![Vertical Lift Carriage Assembly Schematic Diagram](vertical_carriage.png)
 
-### Components Used for Central Lift Mechanism
+* **Component Specifications:**
 | Component Name | Manufacturer / Model | Specifications | Function / Purpose |
 | :--- | :--- | :--- | :--- |
 | **Vertical Linear Guides** | Hiwin / HGR25 | Profile linear guide rails, L=500mm, carbon steel | Provides rigid vertical guidance and prevents carriage twisting |
@@ -108,28 +42,109 @@ Rather than having separate scissor lifts and motors inside each fork (which inc
 | **Carriage Plate** | Custom CNC | 8mm A36 steel plate, precision welded | Mounts the forks, width slides, and telescopic extenders |
 | **Limit Sensors** | Omron / E2E Proximity | Cylindrical inductive sensors, NC/NO outputs | Detects vertical travel limits to prevent mechanical crash |
 
+#### B. Passive Pull-Rod Wheel Folding Mechanism
+For the standard E10 (fixed-length forks), a passive mechanical pull-rod is used to retract the wheel inside the fork when lowered and deploy it when raised.
+* **How It Works:**
+  1. Inside the hollow channel of each fixed fork runs a rigid, adjustable **pull-rod**.
+  2. The front end of the pull-rod is pinned to the Bogie swingarm holding the tandem load rollers.
+  3. The rear end of the pull-rod is pinned to a lever on the vertical lift carriage frame.
+  4. When the carriage is at its lowest position, the linkage pulls the rod back, rotating the swingarm **UP** to fold the rollers inside the fork cavity.
+  5. As the carriage begins to rise, the linkage pushes the rod forward, forcing the swingarm to rotate **DOWN** to contact the floor.
+* **Diagram:**
+![Folding Load Roller Mechanism Schematic Diagram](folding_wheel.png)
+
+* **Component Specifications:**
+| Component Name | Manufacturer / Model | Specifications | Function / Purpose |
+| :--- | :--- | :--- | :--- |
+| **Tandem Load Rollers** | Blickle / Dia 60mm | Polyurethane tread on steel core, needle bearings, 350kg capacity each | Support wheels that roll on the warehouse floor under the pallet |
+| **Pivot Swingarm (Bogie)**| Custom Weldment | Cast steel (45#), precision-machined pivot holes | Houses the tandem rollers and rotates relative to the fork tyne |
+| **Actuation Pull-Rods** | Custom Turnbuckle | High-tensile steel rods (M16 threads) for length calibration (E10 standard specific) | Transmits vertical carriage motion to the front pivot swingarms |
+| **Return Tension Springs**| local supplier / 1.5mm wire | Spring steel, rate $25\text{ N/mm}$, length 150mm | Pulls the swingarms back into the folded position when unloaded |
+| **Pivot Pins & Bushings** | MIsumi / Hardened Steel | Dia 20mm, self-lubricating bronze bushings | High-load joints for swingarm and pull-rod linkages |
+
 ---
 
-## 4. Mast-Type Stacker Lift Mechanism (Model: FL10 Stacker)
+## 2. Model E10T (Telescopic Extending Fork AMR)
 
-### What It Is
-A nested double-stage vertical mast lift system similar to traditional forklift masts, used on the FL10 high-reach stacker.
+The E10T is configured with telescopic extending forks for narrow aisles, designed to pick and place closed-bottom or double-sided pallets (like EUR-2) without moving the main chassis forward.
 
-### Why It Is Used
-The central lift carriage (Section 3) is limited to a lift height of $\sim 100\text{ to }200 \text{ mm}$ (just enough to clear the floor during transit). The FL10 requires lifting pallets up to $2.5 \text{ m}$ for double-layer stacking in warehouse racks. This requires a nested telescoping mast structure.
+### Real Product Photo
+![Real Tusk E10T Telescopic Extending Fork Pallet AMR Product Photo](model_e10t.png)
 
-### How It Works
-1. Outer C-channel steel masts are fixed to the robot chassis.
-2. Inner C-channel masts slide vertically inside the outer masts on sealed guide rollers.
-3. A central hydraulic cylinder or an electric motor-driven leaf chain lift (LH1044) is actuated.
-4. The piston rod pushes the inner mast upward.
-5. Leaf chains anchored to the outer mast run over sheaves at the top of the inner mast and attach to the fork carriage.
-6. This 2:1 mechanical ratio lifts the fork carriage at twice the speed of the inner mast extension, reaching a lift height of $2500 \text{ mm}$.
+### Key Specifications
+* **Payload Capacity:** 1000 kg
+* **Extension Range:** Up to 1400 mm
+* **Forks:** Adjustable width and motorized folding load wheels
 
-### Diagram
+### Core Mechanical Systems
+
+#### A. Telescopic Extending Fork Mechanism
+This mechanism allows the forks to slide out forward from the lift carriage into the pallet openings while the AMR remains stationary, cutting pick aisle requirements to just $2.0 \text{ m}$.
+* **How It Works:**
+  1. A single 24V 200W geared servo motor is mounted on the lift carriage.
+  2. This motor drives a transverse splined shaft.
+  3. Two chain drive sprockets slide along the splined shaft when the fork width adjusts, but rotate with it.
+  4. Each fork channel contains a dual-stage **Rollon DSS43** telescopic guide slide rail and a closed-loop leaf chain.
+  5. When the motor rotates the splined shaft, the chain loops pull the intermediate and outer stages of the telescopic slides forward, extending the forks by up to $1400\text{ mm}$ (over-extension).
+* **Diagram:**
+![Telescopic Robotic Fork Assembly Schematic Diagram](telescopic_fork.png)
+
+* **Component Specifications:**
+| Component Name | Manufacturer / Model | Specifications | Function / Purpose |
+| :--- | :--- | :--- | :--- |
+| **Telescopic Slides** | Rollon / DSS43-1170 | Heavy-duty multi-stage linear slides; over-extension up to 1400mm; Q235 steel | Supports high vertical cantilever loads during fork extension |
+| **Geared Drive Motor** | Leadshine / 24V 200W | Brushless DC geared servo motor; torque 2.5 Nm; integrated encoder | Actuates the transverse splined shaft to slide forks in/out |
+| **Splined Drive Shaft** | Custom / Dia 25mm | High-tensile steel (40Cr), hardened spline profile | Transmits motor torque to sliding sprockets across adjustable width |
+| **Leaf Chains & Sprockets** | local supplier / Type BL546 | High-strength leaf chains, Z15 sprockets | Pulls the telescopic slide stages forward and backward |
+| **Proximity Sensors** | Sick / M12 Inductive | 4mm sensing range; NPN NO; IP67 | Detects home, mid-stage, and full-extension positions |
+
+#### B. Motorized Actuator Wheel Folding Mechanism
+Because the forks extend telescopically, a rigid pull-rod is impossible. The E10T uses a localized electric actuator at the fork tip.
+* **How It Works:**
+  1. A **compact, high-force 24V electric linear actuator** is mounted directly inside the tip of the outer fork stage.
+  2. Electrical power and control cables are routed from the main carriage to the actuator through a **flexible plastic drag chain (cable track)** that bends and nests inside the telescopic slide stages.
+  3. During extension, the actuator is kept fully retracted, holding the Bogie swingarm **UP** inside the fork cavity so it clears the bottom boards of the pallet.
+  4. When the fork reaches full extension (detected by proximity sensors), the controller sends a 24V signal to the linear actuator, extending its piston shaft.
+  5. This pushes the bogie swingarm **DOWN** through the gaps in the bottom boards of the pallet until the polyurethane rollers contact the floor.
+* **Component Specifications:**
+| Component Name | Manufacturer / Model | Specifications | Function / Purpose |
+| :--- | :--- | :--- | :--- |
+| **Tandem Load Rollers** | Blickle / Dia 60mm | Polyurethane tread on steel core, needle bearings, 350kg capacity each | Support wheels that roll on the warehouse floor under the pallet |
+| **Pivot Swingarm (Bogie)**| Custom Weldment | Cast steel (45#), precision-machined pivot holes | Houses the tandem rollers and rotates relative to the fork tyne |
+| **Electric Linear Actuator** | local supplier / 24V DC | Compact high-force linear actuator; 50mm stroke; thrust 2500 N (E10T specific) | Mounts inside telescopic fork tip to push/pull swingarm directly |
+| **Flexible Drag Chain** | Igus / E2 Micro series | Miniature plastic energy chain; minimum bending radius 28mm (E10T specific) | Routes actuator power and sensor cables inside telescopic stages |
+| **Return Tension Springs**| local supplier / 1.5mm wire | Spring steel, rate $25\text{ N/mm}$, length 150mm | Pulls the swingarms back into the folded position when unloaded |
+| **Pivot Pins & Bushings** | Misumi / Hardened Steel | Dia 20mm, self-lubricating bronze bushings | High-load joints for swingarm and pull-rod/actuator linkages |
+
+---
+
+## 3. Model FL10 (High Stacker Robot)
+
+The FL10 is a mast-type forklift stacker robot designed for lifting pallets into vertical storage racks and performing double-layer stacking in warehouse lanes.
+
+### Real Product Photo
+![Real Tusk FL10 Mast-Type High Stacker Forklift Robot Product Photo](model_fl10.png)
+
+### Key Specifications
+* **Payload Capacity:** 1000 kg
+* **Lifting Height:** 2.0 m to 2.5 m (double-stage mast)
+* **Aisle Width:** Operates in lanes as narrow as 1.8 m
+
+### Core Mechanical Systems
+
+#### A. Nested Mast Lift Mechanism
+The FL10 requires lifting pallets up to $2.5 \text{ m}$ for double-layer stacking in warehouse racks. This requires a nested telescoping mast structure.
+* **How It Works:**
+  1. Outer C-channel steel masts are fixed to the robot chassis.
+  2. Inner C-channel masts slide vertically inside the outer masts on sealed guide rollers.
+  3. A central hydraulic cylinder or an electric motor-driven leaf chain lift (LH1044) is actuated.
+  4. The piston rod pushes the inner mast upward.
+  5. Leaf chains anchored to the outer mast run over sheaves at the top of the inner mast and attach to the fork carriage.
+  6. This 2:1 mechanical ratio lifts the fork carriage at twice the speed of the inner mast extension, reaching a lift height of $2500 \text{ mm}$.
+* **Diagram:**
 ![Nested Mast Forklift Stacker Lifting Mechanism Schematic Diagram](mast_lift.png)
 
-### Components Used for Mast Lift Mechanism
+* **Component Specifications:**
 | Component Name | Manufacturer / Model | Specifications | Function / Purpose |
 | :--- | :--- | :--- | :--- |
 | **Nested Mast Channels** | Custom / C-profile | High-strength steel Q345; $180\times70\times10\text{ mm}$ outer channel | Main structural guide channels for high-reach lifting |
@@ -141,52 +156,20 @@ The central lift carriage (Section 3) is limited to a lift height of $\sim 100\t
 
 ---
 
-## 5. Tusk Pallet AMR Product Showcase (Real Product Models)
+## 4. Other Specialized Models (T10 & C10)
 
-This section showcases the real-world industrial models developed by Tusk Robots, demonstrating their physical outlines, configurations, and intended operational applications.
-
-### A. Model E10 / E10D (Standard Low-Profile Pallet AMR)
-The standard E10 is the flagship autonomous pallet handling robot designed for open-bottom pallets (like EUR-1). It rides fully underneath the pallet, keeping a ultra-low outline only slightly wider than the load itself.
-* **Payload Capacity:** 1000 kg
-* **Self-Weight:** 330 kg
-* **Navigation:** Laser SLAM + QR code hybrid
-* **Real Product Image:**
-![Real Tusk E10 / E10D Standard Low-Profile Pallet AMR Product Photo](model_e10.png)
-
----
-
-### B. Model E10T (Telescopic Extending Fork AMR)
-The E10T is specifically configured with the telescopic extending fork mechanism (Section 1) and retractable load rollers (Section 2). It is designed to handle closed-bottom or double-sided pallets (like EUR-2) in narrow aisles by extending its forks while the main chassis remains stationary.
-* **Payload Capacity:** 1000 kg
-* **Extension Range:** Up to 1400 mm
-* **Forks:** Adjustable width and motorized folding load wheels
-* **Real Product Image:**
-![Real Tusk E10T Telescopic Extending Fork Pallet AMR Product Photo](model_e10t.png)
-
----
-
-### C. Model T10 (Split-Fork Pallet AMR)
+### A. Model T10 (Split-Fork Pallet AMR)
 The T10 is a specialized split-fork layout where the two forks are separated by a central gap, designed for handling heavy bottom-board pallet configurations (like the "田" shaped pallet) in tight cross-docking operations.
 * **Payload Capacity:** 1000 kg
 * **Chassis Width:** Compact for narrow lanes
-* **Real Product Image:**
+* **Real Product Photo:**
 ![Real Tusk T10 Split-Fork Pallet AMR Product Photo](model_t10.png)
 
 ---
 
-### D. Model FL10 (High Stacker Robot)
-The FL10 is a mast-type forklift stacker robot designed for lifting pallets into vertical storage racks and performing double-layer stacking in warehouse lanes.
-* **Payload Capacity:** 1000 kg
-* **Lifting Height:** 2.0 m to 2.5 m (double-stage mast)
-* **Aisle Width:** Operates in lanes as narrow as 1.8 m
-* **Real Product Image:**
-![Real Tusk FL10 Mast-Type High Stacker Forklift Robot Product Photo](model_fl10.png)
-
----
-
-### E. Model C10 (Underride Tugger AMR)
+### B. Model C10 (Underride Tugger AMR)
 The C-series represents underride tugger robots. The C10 rolls underneath custom wheeled cargo carts, locks onto them with an automated lifting pin, and tugs them throughout the factory floor.
 * **Tugging/Lifting Capacity:** 1000 kg
 * **Application:** Materials delivery, trolley cart towing, assembly lines
-* **Real Product Image:**
+* **Real Product Photo:**
 ![Real Tusk C10 Underride Tugger Mobile Robot Product Photo](model_c10.png)
