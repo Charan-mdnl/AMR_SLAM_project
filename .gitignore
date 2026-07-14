@@ -1,0 +1,4 @@
+__pycache__/
+tusk-amr-temp/
+.DS_Store
+*.pyc
