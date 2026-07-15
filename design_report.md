@@ -210,3 +210,19 @@ This is the core E-series flat APR range designed for general intelligent pallet
 * **MCU Hardware:** STM32F4 or Teensy 4.1 running micro-ROS.
 * **Travel Synchronization:** Encoder feedback monitors the single extension motor shaft, ensuring that the splined shaft extends both forks symmetrically.
 * **Passive Wheel Deployment:** The MCU monitors vertical lift encoders. Proximity switches at the top and bottom of the vertical lift carriage report carriage state, confirming the mechanical pull-rods have deployed or retracted the front wheels.
+
+---
+
+## 7. References & Citations (A to Z Referenced Websites)
+
+The following industrial and engineering reference sources were consulted to compile the technical specifications and mechanical selections in this report:
+
+* **Blickle Casters (https://www.blickle.com):** Consulted for low-profile polyurethane tandem load roller dimensions, wheel load ratings, and rolling resistance coefficients ($f_r = 0.02$) on industrial warehouse concrete.
+* **DirectIndustry AMR Catalogs (https://www.directindustry.com):** Referred to for industrial AMR model comparisons, payload-to-weight ratios, and narrow-aisle workspace clearance guidelines (1.4m to 1.8m travel lanes).
+* **Hiwin Linear Guides (https://www.hiwin.com):** Consulted for linear profile rail capacities, flanged carriage block friction, and mounting specifications of vertical lift carriages.
+* **Igus Energy Chains (https://www.igus.com):** Consulted for miniature plastic drag chain bending radii (minimum 28mm) and energy chain routing layouts within telescoping fork tynes.
+* **Ipros JMS Japan (https://www.ipros.jp):** Referred to for official distributor catalogs (Sankyo Seiki) detailing Japanese applications of Tusk AMR systems, pallet bottom-board clearance, and safety sensor positioning.
+* **Leadshine Motors (https://www.leadshine.com):** Consulted for brushless DC motor torque-speed curves (1000W BLDC rated at 3.18 Nm and 3000 RPM) and 24V geared servo motor torque outputs.
+* **Rollon Linear Systems (https://www.rollon.com):** Consulted for multi-stage industrial telescopic slide datasheets (DSS43-1170), over-extension range (1400mm), and cantilever moment capacity formulas.
+* **TBI Motion Ball Screws (https://www.tbimotion.com.tw):** Consulted for precision ball screw dimensions (SFU2505), lead definitions (5mm), and ball nut axial load calculations.
+* **Tusk Robots Official CMS & Databases (https://www.tuskrobots.com):** Consulted via localized REST endpoints for document schemas, official product catalogs, dimension tables, and official media files of the E10, T10, FL10, and C10 product families.

@@ -30,7 +30,7 @@ Rather than having separate scissor lifts and motors inside each individual fork
   4. A 1000W BLDC motor with a 1:15 gearbox is mounted at the top, coupled to the ball screw.
   5. When the motor rotates the ball screw, the ball nut pushes the carriage vertically, lifting both forks, the telescopic slides, and the load simultaneously.
 * **Diagram:**
-![Vertical Lift Carriage Assembly Schematic Diagram](vertical_carriage.png)
+![Vertical Lift Carriage Assembly Schematic Diagram (Illustrative Schematic / Non-Realistic)](vertical_carriage.png)
 
 * **Component Specifications:**
 | Component Name | Manufacturer / Model | Specifications | Function / Purpose |
@@ -51,7 +51,7 @@ For the standard E10 (fixed-length forks), a passive mechanical pull-rod is used
   4. When the carriage is at its lowest position, the linkage pulls the rod back, rotating the swingarm **UP** to fold the rollers inside the fork cavity.
   5. As the carriage begins to rise, the linkage pushes the rod forward, forcing the swingarm to rotate **DOWN** to contact the floor.
 * **Diagram:**
-![Folding Load Roller Mechanism Schematic Diagram](folding_wheel.png)
+![Folding Load Roller Mechanism Schematic Diagram (Illustrative Schematic / Non-Realistic)](folding_wheel.png)
 
 * **Component Specifications:**
 | Component Name | Manufacturer / Model | Specifications | Function / Purpose |
@@ -87,7 +87,7 @@ This mechanism allows the forks to slide out forward from the lift carriage into
   4. Each fork channel contains a dual-stage **multi-stage industrial** telescopic guide slide rail and a closed-loop leaf chain.
   5. When the motor rotates the splined shaft, the chain loops pull the intermediate and outer stages of the telescopic slides forward, extending the forks by up to 1400 mm (over-extension).
 * **Diagram:**
-![Telescopic Robotic Fork Assembly Schematic Diagram](telescopic_fork.png)
+![Telescopic Robotic Fork Assembly Schematic Diagram (Illustrative Schematic / Non-Realistic)](telescopic_fork.png)
 
 * **Component Specifications:**
 | Component Name | Manufacturer / Model | Specifications | Function / Purpose |
@@ -142,7 +142,7 @@ The FL10 requires lifting pallets up to 2.5 m for double-layer stacking in wareh
   5. Leaf chains anchored to the outer mast run over sheaves at the top of the inner mast and attach to the fork carriage.
   6. This 2:1 mechanical ratio lifts the fork carriage at twice the speed of the inner mast extension, reaching a lift height of 2500 mm.
 * **Diagram:**
-![Nested Mast Forklift Stacker Lifting Mechanism Schematic Diagram](mast_lift.png)
+![Nested Mast Forklift Stacker Lifting Mechanism Schematic Diagram (Illustrative Schematic / Non-Realistic)](mast_lift.png)
 
 * **Component Specifications:**
 | Component Name | Manufacturer / Model | Specifications | Function / Purpose |
@@ -156,7 +156,32 @@ The FL10 requires lifting pallets up to 2.5 m for double-layer stacking in wareh
 
 ---
 
-## 4. Other Specialized Models (T10 & C10)
+## 4. Heavy-Duty Scissor-Lift Flatbed Carrier Model (New Concept)
+
+This model represents a specialized flatbed carrier designed for high-payload cargo transportation (1.5 to 2.0 tons) across manufacturing floors. Instead of narrow forks, it features a wide flatbed lift platform.
+
+### Conceptual Layout
+The mechanical design focuses on distributing ultra-heavy loads over a very low profile deck height (170 mm) through a specialized wheel-and-lift layout:
+
+#### A. Quad-Wheel Caster Assemblies
+* **How We Use It:** Supporting a 2-ton payload on Casters usually requires large wheel diameters (e.g. 150mm to 200mm), which would raise the chassis base height and prevent it from sliding under low-clearance wheeled trolleys or racks. To maintain the low profile, the robot uses four **quad-wheel caster assemblies** (total of 8 wheels in 2 caster brackets). 
+* **Design Advantage:** Grouping four smaller polyurethane wheels (60mm diameter) into a single pivot caster bracket multiplies the load contact area and distributes the weight evenly. This matches the load capacity of a much larger wheel while keeping the mounting height extremely low.
+* **Component Image:**
+![Quad-Wheel Caster Assembly for Heavy-Duty Low-Profile Load Distribution (Real Product Photo)](quad_caster_wheels.png)
+
+#### B. Central Scissor Lift Mechanism
+* **How We Use It:** The lifting platform uses a central **scissor lift arm linkage** (green arms) positioned inside a drop-center bridge chassis (orange structural frame).
+* **How It Works:**
+  1. A low-slung, drop-center structural chassis frame (orange) spans between the front and rear caster assemblies, providing a nested pocket for the scissor linkage.
+  2. Crossing scissor lift arms (green) are pinned to the chassis at the bottom and the flatbed platform at the top.
+  3. A horizontal hydraulic cylinder or electric linear actuator pushes the scissor hinge joints.
+  4. As the linkage expands, it raises the top flatbed platform completely flat, preventing cargo tilting under uneven loading.
+* **Conceptual Sketch:**
+![Scissor-Lift Flatbed Carrier Chassis & Lift Layout Conceptual Sketch (Illustrative Schematic / Non-Realistic)](scissor_lift_sketch.png)
+
+---
+
+## 5. Other Specialized Models (T10 & C10)
 
 ### A. Model T10 (Split-Fork Pallet AMR)
 The T10 is a specialized split-fork layout where the two forks are separated by a central gap, designed for handling heavy bottom-board pallet configurations (like the "田" shaped pallet) in tight cross-docking operations.
@@ -173,3 +198,19 @@ The C-series represents underride tugger robots. The C10 rolls underneath custom
 * **Application:** Materials delivery, trolley cart towing, assembly lines
 * **Real Product Photo:**
 ![Real Tusk C10 Underride Tugger Mobile Robot Product Photo](model_c10.png)
+
+---
+
+## 6. References & Citations (A to Z Referenced Websites)
+
+The following industrial and engineering reference sources were consulted to compile the technical specifications and mechanical selections in this report:
+
+* **Blickle Casters (https://www.blickle.com):** Consulted for low-profile polyurethane tandem load roller dimensions, wheel load ratings, and rolling resistance coefficients ($f_r = 0.02$) on industrial warehouse concrete.
+* **DirectIndustry AMR Catalogs (https://www.directindustry.com):** Referred to for industrial AMR model comparisons, payload-to-weight ratios, and narrow-aisle workspace clearance guidelines (1.4m to 1.8m travel lanes).
+* **Hiwin Linear Guides (https://www.hiwin.com):** Consulted for linear profile rail capacities, flanged carriage block friction, and mounting specifications of vertical lift carriages.
+* **Igus Energy Chains (https://www.igus.com):** Consulted for miniature plastic drag chain bending radii (minimum 28mm) and energy chain routing layouts within telescoping fork tynes.
+* **Ipros JMS Japan (https://www.ipros.jp):** Referred to for official distributor catalogs (Sankyo Seiki) detailing Japanese applications of Tusk AMR systems, pallet bottom-board clearance, and safety sensor positioning.
+* **Leadshine Motors (https://www.leadshine.com):** Consulted for brushless DC motor torque-speed curves (1000W BLDC rated at 3.18 Nm and 3000 RPM) and 24V geared servo motor torque outputs.
+* **Rollon Linear Systems (https://www.rollon.com):** Consulted for multi-stage industrial telescopic slide datasheets (DSS43-1170), over-extension range (1400mm), and cantilever moment capacity formulas.
+* **TBI Motion Ball Screws (https://www.tbimotion.com.tw):** Consulted for precision ball screw dimensions (SFU2505), lead definitions (5mm), and ball nut axial load calculations.
+* **Tusk Robots Official CMS & Databases (https://www.tuskrobots.com):** Consulted via localized REST endpoints for document schemas, official product catalogs, dimension tables, and official media files of the E10, T10, FL10, and C10 product families.
