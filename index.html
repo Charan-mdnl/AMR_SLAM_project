@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tusk AMR Interactive Configuration Simulator</title>
+    <!-- Import Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Three.js CDN -->
+    <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    
+    <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --panel-glass: rgba(17, 24, 39, 0.7);
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --primary: #ff5722;
+            --primary-glow: rgba(255, 87, 34, 0.4);
+            --accent: #00f0ff;
+            --accent-glow: rgba(0, 240, 255, 0.4);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+        }
+
+        /* Dashboard Grid Layout */
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 350px 1fr 320px;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        /* Sidebars & Glassmorphism */
+        .sidebar {
+            background: var(--panel-glass);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-right: 1px solid var(--border-glass);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 10;
+            overflow-y: auto;
+        }
+
+        .sidebar.right-panel {
+            border-right: none;
+            border-left: 1px solid var(--border-glass);
+        }
+
+        /* Section Styling */
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        h1 span {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--border-glass);
+            padding-bottom: 6px;
+        }
+
+        .subtitle {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        /* 3D Canvas Area */
+        .canvas-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            outline: none;
+        }
+
+        #webgl-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Configurator Cards */
+        .config-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .config-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .config-card.active {
+            background: rgba(255, 87, 34, 0.08);
+            border-color: var(--primary);
+            box-shadow: 0 0 12px var(--primary-glow);
+        }
+
+        .config-card.active h3 {
+            color: var(--primary);
+        }
+
+        .config-card h3 {
+            font-size: 14px;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .config-card p {
+            font-size: 11px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Slider Controls */
+        .control-group {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .slider-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .slider-label {
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .slider-val {
+            color: var(--accent);
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent-glow);
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        /* Real-Time Metrics HUD */
+        .metric-tile {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .metric-tile.highlight {
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
+        }
+
+        .metric-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+
+        .metric-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .metric-value span {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--text-muted);
+            margin-left: 4px;
+        }
+
+        /* 3D Scene Controls HUD */
+        .hud-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(11, 15, 25, 0.8);
+            border: 1px solid var(--border-glass);
+            padding: 12px 18px;
+            border-radius: 30px;
+            pointer-events: auto;
+            backdrop-filter: blur(10px);
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        .hud-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--success);
+            box-shadow: 0 0 8px var(--success);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.6; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.6; }
+        }
+
+        /* Buttons */
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            box-shadow: 0 4px 12px var(--primary-glow);
+        }
+
+        .btn:hover {
+            background: #ff7043;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(255, 87, 34, 0.6);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            box-shadow: none;
+            transform: translateY(-1px);
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    
+    <!-- LEFT PANEL: MODEL SELECTION -->
+    <div class="sidebar">
+        <div>
+            <h1><span>TUSK</span> AMR</h1>
+            <div class="subtitle">Interactive 3D Configuration Simulator</div>
+        </div>
+        
+        <div>
+            <h2>1. Select Robot Configuration</h2>
+            
+            <div class="config-card active" onclick="selectModel('flatbed')" id="card-flatbed">
+                <h3>Option A: Scissor-Lift Flatbed</h3>
+                <p>Heavy-duty flat carrier. Low slung drop-center orange bridge chassis with quad-wheel casters and central scissor lift arms.</p>
+            </div>
+            
+            <div class="config-card" onclick="selectModel('telescopic')" id="card-telescopic">
+                <h3>Option B: E10T Telescopic Fork</h3>
+                <p>Equipped with dual-stage telescoping tynes (1400mm reach), variable span rails, and localized linear actuator wheel folding tips.</p>
+            </div>
+            
+            <div class="config-card" onclick="selectModel('standard')" id="card-standard">
+                <h3>Option C: E10 Standard Fork</h3>
+                <p>Low-profile fixed fork model. Integrated vertical lift carriage (ball screw driven) with mechanical pull-rod wheel folding tynes.</p>
+            </div>
+        </div>
+
+        <div>
+            <h2>2. Active Subsystems</h2>
+            <div class="control-group" id="subsystem-info">
+                <!-- Dynamic text populated by JS -->
+            </div>
+        </div>
+        
+        <button class="btn btn-outline" style="margin-top: auto;" onclick="resetCamera()">Reset 3D View</button>
+    </div>
+    
+    <!-- CENTER PANEL: 3D WEBGL VIEWER -->
+    <div class="canvas-container">
+        <div class="hud-overlay">
+            <div class="hud-dot"></div>
+            <div>Three.js Render Canvas | Left-click + drag to rotate | Right-click to pan | Scroll to zoom</div>
+        </div>
+        <canvas id="webgl-canvas"></canvas>
+    </div>
+    
+    <!-- RIGHT PANEL: CONTROLS & METRICS -->
+    <div class="sidebar right-panel">
+        <div>
+            <h2>3. Interactive Sizers</h2>
+            
+            <div class="control-group">
+                <div class="slider-wrapper">
+                    <div class="slider-label">
+                        <span>Platform Lift Height</span>
+                        <span class="slider-val" id="val-lift">0%</span>
+                    </div>
+                    <input type="range" id="slider-lift" min="0" max="100" value="0" oninput="updateSimulation()">
+                </div>
+                
+                <div class="slider-wrapper" id="extension-control">
+                    <div class="slider-label">
+                        <span>Forks / Deck Extension</span>
+                        <span class="slider-val" id="val-extend">0%</span>
+                    </div>
+                    <input type="range" id="slider-extend" min="0" max="100" value="0" oninput="updateSimulation()">
+                </div>
+                
+                <div class="slider-wrapper">
+                    <div class="slider-label">
+                        <span>Wheel Deployment</span>
+                        <span class="slider-val" id="val-wheels">Folded UP</span>
+                    </div>
+                    <input type="range" id="slider-wheels" min="0" max="1" value="0" oninput="updateSimulation()">
+                </div>
+            </div>
+        </div>
+        
+        <div>
+            <h2>4. Live Performance HUD</h2>
+            
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div class="metric-tile highlight">
+                    <div class="metric-title">Max Rated Payload</div>
+                    <div class="metric-value" id="hud-payload">2000<span>kg</span></div>
+                </div>
+                
+                <div class="metric-tile">
+                    <div class="metric-title">Chassis Lowered Height</div>
+                    <div class="metric-value" id="hud-height">170<span>mm</span></div>
+                </div>
+                
+                <div class="metric-tile">
+                    <div class="metric-title">Internal Nesting Clearance</div>
+                    <div class="metric-value" id="hud-clearance">70<span>mm</span></div>
+                </div>
+                
+                <div class="metric-tile">
+                    <div class="metric-title">Ground Contact Points</div>
+                    <div class="metric-value" id="hud-points">10<span>pts</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <button class="btn" onclick="triggerPresetDemo()">Run Sequence Preset Demo</button>
+    </div>
+</div>
+
+<script>
+    // -------------------------------------------------------------------------
+    // 3D SIMULATOR LOGIC (THREE.JS)
+    // -------------------------------------------------------------------------
+    
+    let scene, camera, renderer, controls;
+    let robotGroup;
+    let currentModel = 'flatbed'; // 'flatbed', 'telescopic', 'standard'
+    
+    // Components reference
+    let chassisMesh, liftCarriage, forks = [], wheels = [], scissorArms = [], palletMesh;
+    
+    // Config state
+    let state = {
+        lift: 0,       // 0 to 1
+        extend: 0,     // 0 to 1
+        wheelsDown: 0  // 0 or 1
+    };
+
+    function init3D() {
+        const canvas = document.getElementById('webgl-canvas');
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x0b0f19);
+        
+        // Add Grid & Ambient lighting
+        const gridHelper = new THREE.GridHelper(12, 24, 0xff5722, 0x1e293b);
+        gridHelper.position.y = -0.5;
+        scene.add(gridHelper);
+        
+        // Lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+        scene.add(ambientLight);
+        
+        const dirLight1 = new THREE.DirectionalLight(0xffffff, 0.8);
+        dirLight1.position.set(5, 8, 5);
+        scene.add(dirLight1);
+        
+        const dirLight2 = new THREE.DirectionalLight(0x00f0ff, 0.3);
+        dirLight2.position.set(-5, 4, -5);
+        scene.add(dirLight2);
+
+        // Camera setup
+        camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
+        camera.position.set(3, 2, 4);
+        
+        // Renderer
+        renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        
+        // Orbit Controls
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.maxPolarAngle = Math.PI / 2 + 0.05; // don't go below floor
+        controls.minDistance = 1.5;
+        controls.maxDistance = 15;
+        
+        // Build the Robot assembly group
+        robotGroup = new THREE.Group();
+        scene.add(robotGroup);
+        
+        buildActiveModel();
+        updateSubsystemText();
+        
+        // Resize listener
+        window.addEventListener('resize', onWindowResize);
+        
+        animate();
+    }
+
+    // -------------------------------------------------------------------------
+    // 3D GEOMETRY BUILDERS
+    // -------------------------------------------------------------------------
+    
+    function clearRobotGroup() {
+        while(robotGroup.children.length > 0){ 
+            const obj = robotGroup.children[0];
+            robotGroup.remove(obj); 
+        }
+        forks = [];
+        wheels = [];
+        scissorArms = [];
+    }
+
+    function buildActiveModel() {
+        clearRobotGroup();
+        
+        // Material definitions
+        const matChassis = new THREE.MeshStandardMaterial({ color: 0xff5722, metalness: 0.5, roughness: 0.3 }); // Orange
+        const matChassisHD = new THREE.MeshStandardMaterial({ color: 0x1e3a8a, metalness: 0.6, roughness: 0.2 }); // HD Blue
+        const matSteel = new THREE.MeshStandardMaterial({ color: 0x9ca3af, metalness: 0.8, roughness: 0.2 });
+        const matCasterPlate = new THREE.MeshStandardMaterial({ color: 0x4b5563, metalness: 0.7, roughness: 0.3 });
+        const matWheel = new THREE.MeshStandardMaterial({ color: 0x030712, roughness: 0.8 }); // Black Rubber
+        const matRoller = new THREE.MeshStandardMaterial({ color: 0xf59e0b, metalness: 0.2, roughness: 0.4 }); // Orange Polyurethane
+        const matGreen = new THREE.MeshStandardMaterial({ color: 0x10b981, metalness: 0.5, roughness: 0.4 }); // Green Lift
+        const matPallet = new THREE.MeshStandardMaterial({ color: 0xb45309, roughness: 0.9 }); // Wooden brown
+        
+        if (currentModel === 'flatbed') {
+            // OPTION A: HEAVY-DUTY FLATBED CARRIER WITH CENTRAL SCISSOR LIFT & QUAD-WHEEL CASTERS
+            
+            // 1. Drop-Center Orange/HD Blue Bridge Chassis
+            chassisMesh = new THREE.Group();
+            
+            // Left main deck span
+            const deckL = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.15, 0.9), matChassis);
+            deckL.position.set(-0.6, -0.15, 0);
+            chassisMesh.add(deckL);
+            
+            // Right main deck span
+            const deckR = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.15, 0.9), matChassis);
+            deckR.position.set(0.6, -0.15, 0);
+            chassisMesh.add(deckR);
+            
+            // Drop-center low bed plate (for nesting scissor arms)
+            const lowBed = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.04, 0.8), matSteel);
+            lowBed.position.set(0, -0.32, 0);
+            chassisMesh.add(lowBed);
+            
+            robotGroup.add(chassisMesh);
+            
+            // 2. Swivel Casters: 4x Quad-Wheel Assemblies at the corners
+            const positions = [
+                {x: -0.65, z: -0.38}, {x: -0.65, z: 0.38},
+                {x: 0.65, z: -0.38},  {x: 0.65, z: 0.38}
+            ];
+            
+            positions.forEach(pos => {
+                const casterRig = new THREE.Group();
+                casterRig.position.set(pos.x, -0.38, pos.z);
+                
+                // Plate mount
+                const plate = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.02, 0.12), matCasterPlate);
+                casterRig.add(plate);
+                
+                // Fork arms
+                const armL = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.08, 0.1), matCasterPlate);
+                armL.position.set(-0.04, -0.04, 0);
+                const armR = armL.clone();
+                armR.position.x = 0.04;
+                casterRig.add(armL);
+                casterRig.add(armR);
+                
+                // 4x Small Polyurethane Wheels grouped together (Quad-Wheel Layout)
+                const wOffsets = [
+                    {x: -0.03, z: -0.03}, {x: -0.03, z: 0.03},
+                    {x: 0.03, z: -0.03},  {x: 0.03, z: 0.03}
+                ];
+                
+                wOffsets.forEach(w => {
+                    const wheel = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.02, 16), matRoller);
+                    wheel.rotation.z = Math.PI / 2;
+                    wheel.position.set(w.x, -0.08, w.z);
+                    casterRig.add(wheel);
+                });
+                
+                chassisMesh.add(casterRig);
+            });
+            
+            // 3. Central Scissor Lift Linkage arms (Green)
+            // Left Scissor Arm Set
+            const scissorL = new THREE.Group();
+            scissorL.position.set(-0.25, -0.3, 0);
+            
+            const linkL1 = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.5, 0.04), matGreen);
+            linkL1.rotation.z = Math.PI / 4;
+            const linkL2 = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.5, 0.04), matGreen);
+            linkL2.rotation.z = -Math.PI / 4;
+            
+            scissorL.add(linkL1);
+            scissorL.add(linkL2);
+            scissorArms.push({ group: scissorL, l1: linkL1, l2: linkL2, side: 'left' });
+            robotGroup.add(scissorL);
+            
+            // Right Scissor Arm Set
+            const scissorR = new THREE.Group();
+            scissorR.position.set(0.25, -0.3, 0);
+            
+            const linkR1 = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.5, 0.04), matGreen);
+            linkR1.rotation.z = Math.PI / 4;
+            const linkR2 = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.5, 0.04), matGreen);
+            linkR2.rotation.z = -Math.PI / 4;
+            
+            scissorR.add(linkR1);
+            scissorR.add(linkR2);
+            scissorArms.push({ group: scissorR, l1: linkR1, l2: linkR2, side: 'right' });
+            robotGroup.add(scissorR);
+            
+            // 4. Flatbed Platform Deck
+            liftCarriage = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.04, 1.0), matSteel);
+            liftCarriage.position.set(0, 0, 0);
+            robotGroup.add(liftCarriage);
+            
+            // 5. Cargo Pallet (Raised/Lowered with flatbed)
+            palletMesh = buildPalletGeometry(matPallet);
+            palletMesh.position.set(0, 0.08, 0);
+            liftCarriage.add(palletMesh);
+            
+        } else if (currentModel === 'telescopic') {
+            // OPTION B: E10T TELESCOPIC EXTENDING FORK AMR
+            
+            // 1. Chassis Body (Low Profile Orange block)
+            chassisMesh = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.26, 0.95), matChassis);
+            chassisMesh.position.set(-0.55, -0.2, 0);
+            robotGroup.add(chassisMesh);
+            
+            // Caster Wheels under main chassis
+            const casterPositions = [
+                {x: -0.75, z: -0.38}, {x: -0.75, z: 0.38},
+                {x: -0.35, z: -0.38}, {x: -0.35, z: 0.38}
+            ];
+            casterPositions.forEach(pos => {
+                const cWheel = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.04, 16), matWheel);
+                cWheel.rotation.x = Math.PI / 2;
+                cWheel.position.set(pos.x, -0.38, pos.z);
+                robotGroup.add(cWheel);
+            });
+            
+            // Differential Drive wheels (mid chassis)
+            const drivePositions = [-0.48, 0.48];
+            drivePositions.forEach(z => {
+                const dWheel = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.06, 24), matRoller);
+                dWheel.rotation.x = Math.PI / 2;
+                dWheel.position.set(-0.55, -0.33, z);
+                robotGroup.add(dWheel);
+            });
+            
+            // 2. Vertical Carriage slide plate (Slides up/down)
+            liftCarriage = new THREE.Group();
+            liftCarriage.position.set(-0.28, -0.2, 0);
+            
+            // Vertical slide panel
+            const slidePlate = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.32, 0.8), matSteel);
+            slidePlate.position.set(0, 0, 0);
+            liftCarriage.add(slidePlate);
+            
+            robotGroup.add(liftCarriage);
+            
+            // 3. Dual Telescoping tynes extending forward
+            const forkZOffsets = [-0.25, 0.25];
+            forkZOffsets.forEach((z, index) => {
+                const forkGroup = new THREE.Group();
+                forkGroup.position.set(0, -0.06, z);
+                
+                // Stage 1: Fixed base tyne
+                const stage1 = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.06, 0.16), matChassis);
+                stage1.position.set(0.35, 0, 0);
+                forkGroup.add(stage1);
+                
+                // Stage 2: Intermediate sliding channel
+                const stage2 = new THREE.Mesh(new THREE.BoxGeometry(0.68, 0.045, 0.13), matSteel);
+                stage2.position.set(0.35, 0, 0);
+                forkGroup.add(stage2);
+                
+                // Stage 3: Sliding Fork Tip
+                const stage3 = new THREE.Mesh(new THREE.BoxGeometry(0.66, 0.03, 0.11), matSteel);
+                stage3.position.set(0.35, 0, 0);
+                forkGroup.add(stage3);
+                
+                // Localized deployable Load Roller swingarm inside tip
+                const rollerGroup = new THREE.Group();
+                rollerGroup.position.set(0.6, -0.015, 0);
+                
+                const rollerCylinder = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.08, 16), matRoller);
+                rollerCylinder.rotation.x = Math.PI / 2;
+                rollerGroup.add(rollerCylinder);
+                
+                stage3.add(rollerGroup);
+                
+                forks.push({
+                    group: forkGroup,
+                    s1: stage1,
+                    s2: stage2,
+                    s3: stage3,
+                    roller: rollerGroup
+                });
+                
+                liftCarriage.add(forkGroup);
+            });
+            
+            // 4. Wooden Pallet (reposes on forks)
+            palletMesh = buildPalletGeometry(matPallet);
+            palletMesh.position.set(0.6, 0.12, 0);
+            liftCarriage.add(palletMesh);
+            
+        } else if (currentModel === 'standard') {
+            // OPTION C: E10 STANDARD FLAT FORK AMR WITH PULL-ROD RETRACTION
+            
+            // 1. Chassis Body
+            chassisMesh = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.26, 0.95), matChassis);
+            chassisMesh.position.set(-0.55, -0.2, 0);
+            robotGroup.add(chassisMesh);
+            
+            // Casters
+            const casterPositions = [
+                {x: -0.75, z: -0.38}, {x: -0.75, z: 0.38},
+                {x: -0.35, z: -0.38}, {x: -0.35, z: 0.38}
+            ];
+            casterPositions.forEach(pos => {
+                const cWheel = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.04, 16), matWheel);
+                cWheel.rotation.x = Math.PI / 2;
+                cWheel.position.set(pos.x, -0.38, pos.z);
+                robotGroup.add(cWheel);
+            });
+            
+            // Drive wheels
+            const drivePositions = [-0.48, 0.48];
+            drivePositions.forEach(z => {
+                const dWheel = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.06, 24), matRoller);
+                dWheel.rotation.x = Math.PI / 2;
+                dWheel.position.set(-0.55, -0.33, z);
+                robotGroup.add(dWheel);
+            });
+            
+            // 2. Vertical Carriage slide plate (driven by ball screw)
+            liftCarriage = new THREE.Group();
+            liftCarriage.position.set(-0.28, -0.2, 0);
+            
+            const slidePlate = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.32, 0.8), matSteel);
+            slidePlate.position.set(0, 0, 0);
+            liftCarriage.add(slidePlate);
+            
+            robotGroup.add(liftCarriage);
+            
+            // 3. Fixed Length Forks (1200mm length, thin forks)
+            const forkZOffsets = [-0.25, 0.25];
+            forkZOffsets.forEach((z, index) => {
+                const forkGroup = new THREE.Group();
+                forkGroup.position.set(0, -0.06, z);
+                
+                // Fixed long fork channel
+                const forkBar = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.06, 0.16), matChassis);
+                forkBar.position.set(0.6, 0, 0);
+                forkGroup.add(forkBar);
+                
+                // Passive pull-rod (illustrated by long steel shaft running inside channel)
+                const pullRod = new THREE.Mesh(new THREE.CylinderGeometry(0.008, 0.008, 1.1, 8), matSteel);
+                pullRod.rotation.z = Math.PI / 2;
+                pullRod.position.set(0.55, 0.02, 0);
+                forkGroup.add(pullRod);
+                
+                // Swingarm Tandem rollers at front tip
+                const rollerGroup = new THREE.Group();
+                rollerGroup.position.set(1.1, -0.015, 0);
+                
+                const rollerCylinder = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.08, 16), matRoller);
+                rollerCylinder.rotation.x = Math.PI / 2;
+                rollerGroup.add(rollerCylinder);
+                
+                forkBar.add(rollerGroup);
+                
+                forks.push({
+                    group: forkGroup,
+                    bar: forkBar,
+                    roller: rollerGroup
+                });
+                
+                liftCarriage.add(forkGroup);
+            });
+            
+            // 4. Wooden Pallet (directly sits on forks)
+            palletMesh = buildPalletGeometry(matPallet);
+            palletMesh.position.set(0.6, 0.12, 0);
+            liftCarriage.add(palletMesh);
+        }
+    }
+
+    // Helper to generate a realistic semi-transparent wood pallet box
+    function buildPalletGeometry(material) {
+        const pallet = new THREE.Group();
+        
+        // Bottom deck boards (longitudinal)
+        for (let y of [-0.4, 0, 0.4]) {
+            const board = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.02, 0.12), material);
+            board.position.set(0, -0.06, y);
+            pallet.add(board);
+        }
+        
+        // 9 Blocks
+        for (let x of [-0.5, 0, 0.5]) {
+            for (let y of [-0.4, 0, 0.4]) {
+                const block = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.08, 0.12), material);
+                block.position.set(x, -0.01, y);
+                pallet.add(block);
+            }
+        }
+        
+        // Top deck boards
+        for (let y of [-0.45, -0.3, -0.15, 0, 0.15, 0.3, 0.45]) {
+            const board = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.02, 0.08), material);
+            board.position.set(0, 0.04, y);
+            pallet.add(board);
+        }
+        
+        // Sizing scale down to look realistic relative to AMR
+        pallet.scale.set(0.9, 0.9, 0.9);
+        return pallet;
+    }
+
+    // -------------------------------------------------------------------------
+    // ANIMATION & LOOP
+    // -------------------------------------------------------------------------
+    
+    function animate() {
+        requestAnimationFrame(animate);
+        
+        // Update physics and kinematic states based on sliders
+        if (currentModel === 'flatbed') {
+            // Scissor lift vertical motion
+            const liftHeight = state.lift * 0.3; // max lift height 300mm
+            liftCarriage.position.y = -0.3 + liftHeight;
+            
+            // Adjust scissor linkages angle based on lift
+            const angle = Math.PI / 4 - (state.lift * Math.PI / 12);
+            scissorArms.forEach(arm => {
+                arm.l1.rotation.z = angle;
+                arm.l2.rotation.z = -angle;
+                arm.group.position.y = -0.3 + (liftHeight / 2);
+            });
+            
+            // Casters deployment (visual pivot rotation on caster rigs)
+            chassisMesh.children.forEach(child => {
+                if (child.type === 'Group') { // Swivel caster group
+                    child.rotation.y += 0.005; // slow swivel animation
+                }
+            });
+            
+        } else if (currentModel === 'telescopic') {
+            // Ball screw vertical lift carriage motion
+            const liftHeight = state.lift * 0.1; // E10T lift height 100mm
+            liftCarriage.position.y = -0.2 + liftHeight;
+            
+            // Telescopic extension kinematics
+            const extRatio = state.extend;
+            forks.forEach(fork => {
+                // Stage 2 slides 50% of total extension
+                fork.s2.position.x = 0.35 + (extRatio * 0.35);
+                // Stage 3 slides 100% of total extension
+                fork.s3.position.x = 0.35 + (extRatio * 0.7);
+                
+                // Active wheel deployment (Bogie swingarm pivots down)
+                // Lower wheels deploy as wheelsDown matches deployment state
+                if (state.wheelsDown === 1) {
+                    fork.roller.position.y = -0.06; // deployed to contact floor
+                } else {
+                    fork.roller.position.y = -0.015; // retracted inside fork tip
+                }
+            });
+            
+        } else if (currentModel === 'standard') {
+            // Standard vertical lift carriage
+            const liftHeight = state.lift * 0.1; // 100mm lift
+            liftCarriage.position.y = -0.2 + liftHeight;
+            
+            // Passive wheel deployment linkage (linked directly to lift height)
+            forks.forEach(fork => {
+                if (state.lift > 0.1) {
+                    fork.roller.position.y = -0.05; // deployed automatically
+                } else {
+                    fork.roller.position.y = -0.015; // folded up when lowered
+                }
+            });
+        }
+        
+        controls.update();
+        renderer.render(scene, camera);
+    }
+
+    function onWindowResize() {
+        const canvas = document.getElementById('webgl-canvas');
+        camera.aspect = canvas.clientWidth / canvas.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+    }
+
+    function resetCamera() {
+        controls.reset();
+        camera.position.set(3, 2, 4);
+    }
+
+    // -------------------------------------------------------------------------
+    // CONTROLLER & UI EVENT HANDLERS
+    // -------------------------------------------------------------------------
+    
+    function selectModel(modelType) {
+        currentModel = modelType;
+        
+        // Update card active classes
+        document.querySelectorAll('.config-card').forEach(card => card.classList.remove('active'));
+        document.getElementById(`card-${modelType}`).classList.add('active');
+        
+        // Show/hide deck extension slider (E10 standard doesn't extend, E10T does, flatbed extends load decks)
+        const extSlider = document.getElementById('extension-control');
+        if (modelType === 'standard') {
+            extSlider.style.opacity = '0.3';
+            extSlider.style.pointerEvents = 'none';
+        } else {
+            extSlider.style.opacity = '1';
+            extSlider.style.pointerEvents = 'auto';
+        }
+        
+        // Reset slider values
+        document.getElementById('slider-lift').value = 0;
+        document.getElementById('slider-extend').value = 0;
+        document.getElementById('slider-wheels').value = 0;
+        
+        state.lift = 0;
+        state.extend = 0;
+        state.wheelsDown = 0;
+        
+        document.getElementById('val-lift').innerText = '0%';
+        document.getElementById('val-extend').innerText = '0%';
+        document.getElementById('val-wheels').innerText = 'Folded UP';
+        
+        buildActiveModel();
+        updateSubsystemText();
+        updateLiveHUD();
+        resetCamera();
+    }
+
+    function updateSimulation() {
+        const liftVal = document.getElementById('slider-lift').value;
+        const extVal = document.getElementById('slider-extend').value;
+        const wheelVal = document.getElementById('slider-wheels').value;
+        
+        state.lift = liftVal / 100;
+        state.extend = extVal / 100;
+        state.wheelsDown = parseInt(wheelVal);
+        
+        document.getElementById('val-lift').innerText = `${liftVal}%`;
+        document.getElementById('val-extend').innerText = `${extVal}%`;
+        document.getElementById('val-wheels').innerText = state.wheelsDown === 1 ? 'Deployed DOWN' : 'Folded UP';
+        
+        // Sizers dependency logic:
+        // For E10 standard, wheel deployment is mechanical. If lift > 10%, wheels auto-deploy down.
+        if (currentModel === 'standard') {
+            const autoWheelVal = state.lift > 0.1 ? 1 : 0;
+            document.getElementById('slider-wheels').value = autoWheelVal;
+            document.getElementById('val-wheels').innerText = autoWheelVal === 1 ? 'Deployed DOWN (Auto)' : 'Folded UP (Auto)';
+        }
+        
+        updateLiveHUD();
+    }
+
+    function updateLiveHUD() {
+        const payloadHUD = document.getElementById('hud-payload');
+        const heightHUD = document.getElementById('hud-height');
+        const clearanceHUD = document.getElementById('hud-clearance');
+        const pointsHUD = document.getElementById('hud-points');
+        
+        if (currentModel === 'flatbed') {
+            payloadHUD.innerHTML = '2000<span>kg</span>';
+            heightHUD.innerHTML = '170<span>mm</span>';
+            clearanceHUD.innerHTML = '70<span>mm</span>';
+            pointsHUD.innerHTML = '10<span>pts</span>';
+        } else if (currentModel === 'telescopic') {
+            payloadHUD.innerHTML = '1000<span>kg</span>';
+            heightHUD.innerHTML = '170<span>mm</span>';
+            clearanceHUD.innerHTML = '45<span>mm</span>';
+            pointsHUD.innerHTML = state.wheelsDown === 1 ? '8<span>pts</span>' : '6<span>pts</span>';
+        } else if (currentModel === 'standard') {
+            payloadHUD.innerHTML = '1000<span>kg</span>';
+            heightHUD.innerHTML = '170<span>mm</span>';
+            clearanceHUD.innerHTML = '45<span>mm</span>';
+            pointsHUD.innerHTML = state.lift > 0.1 ? '8<span>pts</span>' : '6<span>pts</span>';
+        }
+    }
+
+    function updateSubsystemText() {
+        const infoPanel = document.getElementById('subsystem-info');
+        if (currentModel === 'flatbed') {
+            infoPanel.innerHTML = `
+                <div style="font-size: 13px; font-weight: 600; color: var(--accent);">Chassis & Drive Layout:</div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">Drop-Center Orange Bridge Chassis, Differential Drive Center Axis, 4x Hamilton Swivel Casters.</div>
+                
+                <div style="font-size: 13px; font-weight: 600; color: var(--accent);">Corner Casters:</div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">**Low-Profile Quad-Wheel Casters** (4 wheels per caster, 60mm dia). Spreads heavy loads, decreases floor scrubbing, and achieves ultra-low height (100mm).</div>
+                
+                <div style="font-size: 13px; font-weight: 600; color: var(--accent);">Lifting Subsystem:</div>
+                <div style="font-size: 11px; color: var(--text-muted);">Central **Green Scissor Lift arms** actuated by central hydraulic piston. Distributes flat bed loading evenly.</div>
+            `;
+        } else if (currentModel === 'telescopic') {
+            infoPanel.innerHTML = `
+                <div style="font-size: 13px; font-weight: 600; color: var(--accent);">Chassis & Drive Layout:</div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">Compact chassis body, Differential Drive Center Axis, 4x Caster support wheels.</div>
+                
+                <div style="font-size: 13px; font-weight: 600; color: var(--accent);">Extending Forks:</div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">Dual-stage **Telescopic linear slides** driven by motor splined shaft and chains. Reach: 1400mm.</div>
+                
+                <div style="font-size: 13px; font-weight: 600; color: var(--accent);">Fork Tip Casters:</div>
+                <div style="font-size: 11px; color: var(--text-muted);">**Motorized local 24V linear actuators** inside fork tips. Folds wheels up during pallet approach; deploys wheels down inside pallet gaps.</div>
+            `;
+        } else if (currentModel === 'standard') {
+            infoPanel.innerHTML = `
+                <div style="font-size: 13px; font-weight: 600; color: var(--accent);">Chassis & Drive Layout:</div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">Standard E10 Chassis, Differential Drive Center Axis, 4x Casters.</div>
+                
+                <div style="font-size: 13px; font-weight: 600; color: var(--accent);">Lifting Subsystem:</div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">Vertical slide carriage driven by a central **Vertical Ball screw (25mm dia)** and 1000W BLDC motor.</div>
+                
+                <div style="font-size: 13px; font-weight: 600; color: var(--accent);">Fork Tip Casters:</div>
+                <div style="font-size: 11px; color: var(--text-muted);">**Passive Mechanical Pull-Rod** running inside fixed forks, linked directly to carriage vertical position. Auto-deploys wheels.</div>
+            `;
+        }
+    }
+
+    // Runs a visual preset simulation demo sequence
+    function triggerPresetDemo() {
+        let step = 0;
+        const interval = setInterval(() => {
+            if (currentModel === 'flatbed') {
+                if (step < 20) { // approach
+                    step++;
+                } else if (step < 50) { // lift platform
+                    state.lift += 0.033;
+                    document.getElementById('slider-lift').value = Math.round(state.lift * 100);
+                    updateSimulation();
+                    step++;
+                } else if (step < 70) { // lower platform
+                    state.lift -= 0.05;
+                    document.getElementById('slider-lift').value = Math.max(0, Math.round(state.lift * 100));
+                    updateSimulation();
+                    step++;
+                } else {
+                    clearInterval(interval);
+                }
+            } else {
+                if (step < 25) { // Extend forks
+                    state.extend += 0.04;
+                    document.getElementById('slider-extend').value = Math.round(state.extend * 100);
+                    updateSimulation();
+                    step++;
+                } else if (step < 35) { // Deploy wheels down
+                    state.wheelsDown = 1;
+                    document.getElementById('slider-wheels').value = 1;
+                    updateSimulation();
+                    step++;
+                } else if (step < 60) { // Lift load
+                    state.lift += 0.04;
+                    document.getElementById('slider-lift').value = Math.round(state.lift * 100);
+                    updateSimulation();
+                    step++;
+                } else if (step < 85) { // Lower load
+                    state.lift -= 0.04;
+                    document.getElementById('slider-lift').value = Math.max(0, Math.round(state.lift * 100));
+                    updateSimulation();
+                    step++;
+                } else if (step < 95) { // Retract wheels up
+                    state.wheelsDown = 0;
+                    document.getElementById('slider-wheels').value = 0;
+                    updateSimulation();
+                    step++;
+                } else if (step < 120) { // Retract forks
+                    state.extend -= 0.04;
+                    document.getElementById('slider-extend').value = Math.max(0, Math.round(state.extend * 100));
+                    updateSimulation();
+                    step++;
+                } else {
+                    clearInterval(interval);
+                }
+            }
+        }, 50);
+    }
+
+    // Initialize on load
+    window.onload = init3D;
+</script>
+
+</body>
+</html>
