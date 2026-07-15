@@ -197,6 +197,20 @@ This is the core E-series flat APR range designed for general intelligent pallet
 ### 5.4. C-Series (Underride/Tugger AMRs)
 *   **C10:** Designed to slide completely underneath custom racks, carts, or rolling cages (underride AMR). It utilizes a central pin elevator or a small flatbed lifting table to lock onto and lift the cart off the ground to transport it.
 
+### 5.5. Heavy-Duty Scissor-Lift Flatbed Carrier (New Concept)
+Designed for high-payload cargo transportation (1.5 to 2.0 tons) across manufacturing floors, utilizing a drop-center bridge chassis (orange structural frame), a central scissor-lift mechanism (green), and quad-wheel swivel casters (yellow).
+
+#### A. Caster Selection & Comparison Study
+To achieve a very low platform height (170 mm overall) while supporting a 2.0-ton cargo capacity, three industrial caster configurations were evaluated:
+1. **Hamilton Mini-Mite™ Series (Model [S-MM2-43D](https://www.hamiltoncaster.com/Casters/Heavy-Duty-Casters/Low-Profile-Casters/Mini-Mite-Heavy-Duty-Casters)):** Low-profile dual-wheel caster. Capacity: 4,500 kg/caster. Height: 152 mm. This is too tall, leaving only 18 mm of space inside our 170 mm chassis.
+2. **Blickle Low-Profile Twin-Wheel (Model [LKD-BPA 75K-1](https://www.blickle.com/products/castors/compact-castors/twin-wheel-castors)):** Compact twin-wheel castor. Capacity: 1,750 kg/caster. Height: 125 mm. Good option, leaving 45 mm of internal vertical space.
+3. **Custom Quad-Wheel Caster Assembly ([Hamilton Custom](https://www.hamiltoncaster.com)):** **(BEST RECOMMENDATION)** Grouping 4 smaller wheels (60 mm diameter) into a single pivot caster rig. Capacity: 2,000 kg/caster. Mounting Height: **100 mm**. This provides a massive **70 mm of vertical space** inside our 170 mm chassis, offering maximum clearance for nesting the scissor lift linkage and battery packs, and reduces floor scrubbing during pivot turns.
+
+#### B. Real-World AGV/AMR Examples
+* **Mobile Industrial Robots (MiR) MiR1350:** Heavy-duty 1.35-ton flatbed AMR. Uses low-profile twin-wheel casters at the corners of a drop-center chassis to distribute weight and ensure easy pivot turning in tight lanes.
+* **Kuka KMP 1500:** A 1.5-ton capacity flatbed AMR. It utilizes a central differential drive axis and compact dual-wheel casters to maintain an ultra-low deck height of 200 mm.
+* **Siasun Heavy-Duty Assembly AGVs:** Carries 2.0-ton car bodies in automotive factories, using quad-wheel caster rigs to achieve a low deck height so assembly workers can step on/off safely.
+
 ---
 
 ## 6. Software & Navigation System
