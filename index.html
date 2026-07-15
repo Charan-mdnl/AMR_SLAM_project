@@ -363,6 +363,11 @@
                 <h3>Option C: E10 Standard Fork</h3>
                 <p>Low-profile fixed fork model. Integrated vertical lift carriage (ball screw driven) with mechanical pull-rod wheel folding tynes.</p>
             </div>
+
+            <div class="config-card" onclick="selectModel('stacker')" id="card-stacker">
+                <h3>Option D: FL10 High Stacker</h3>
+                <p>High-reach forklift stacker. Features nested dual-stage steel masts, 2:1 chain hoisting ratio, and 2500mm vertical lift height.</p>
+            </div>
         </div>
 
         <div>
@@ -453,10 +458,10 @@
     
     let scene, camera, renderer, controls;
     let robotGroup;
-    let currentModel = 'flatbed'; // 'flatbed', 'telescopic', 'standard'
+    let currentModel = 'flatbed'; // 'flatbed', 'telescopic', 'standard', 'stacker'
     
     // Components reference
-    let chassisMesh, liftCarriage, forks = [], wheels = [], scissorArms = [], palletMesh;
+    let chassisMesh, liftCarriage, innerMast, forks = [], wheels = [], scissorArms = [], palletMesh;
     
     // Config state
     let state = {
@@ -529,6 +534,7 @@
         forks = [];
         wheels = [];
         scissorArms = [];
+        innerMast = null;
     }
 
     function buildActiveModel() {
@@ -543,6 +549,9 @@
         const matRoller = new THREE.MeshStandardMaterial({ color: 0xf59e0b, metalness: 0.2, roughness: 0.4 }); // Orange Polyurethane
         const matGreen = new THREE.MeshStandardMaterial({ color: 0x10b981, metalness: 0.5, roughness: 0.4 }); // Green Lift
         const matPallet = new THREE.MeshStandardMaterial({ color: 0xb45309, roughness: 0.9 }); // Wooden brown
+        const matDriveWheel = new THREE.MeshStandardMaterial({ color: 0x1f2937, roughness: 0.9 }); // Dark grey rubber tire
+        const matHub = new THREE.MeshStandardMaterial({ color: 0xff5722, metalness: 0.5, roughness: 0.2 }); // Orange metal hub cap
+        
         
         if (currentModel === 'flatbed') {
             // OPTION A: HEAVY-DUTY FLATBED CARRIER WITH CENTRAL SCISSOR LIFT & QUAD-WHEEL CASTERS
@@ -667,10 +676,20 @@
             // Differential Drive wheels (mid chassis)
             const drivePositions = [-0.48, 0.48];
             drivePositions.forEach(z => {
-                const dWheel = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.06, 24), matRoller);
-                dWheel.rotation.x = Math.PI / 2;
-                dWheel.position.set(-0.55, -0.33, z);
-                robotGroup.add(dWheel);
+                const dWheelGroup = new THREE.Group();
+                dWheelGroup.position.set(-0.55, -0.33, z);
+                
+                // Tire (Dark grey)
+                const tire = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.06, 24), matDriveWheel);
+                tire.rotation.x = Math.PI / 2;
+                dWheelGroup.add(tire);
+                
+                // Hub Cap (Orange metal center)
+                const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.062, 16), matHub);
+                hub.rotation.x = Math.PI / 2;
+                dWheelGroup.add(hub);
+                
+                robotGroup.add(dWheelGroup);
             });
             
             // 2. Vertical Carriage slide plate (Slides up/down)
@@ -707,7 +726,7 @@
                 
                 // Localized deployable Load Roller swingarm inside tip
                 const rollerGroup = new THREE.Group();
-                rollerGroup.position.set(0.6, -0.015, 0);
+                rollerGroup.position.set(0.3, -0.015, 0);
                 
                 const rollerCylinder = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.08, 16), matRoller);
                 rollerCylinder.rotation.x = Math.PI / 2;
@@ -754,10 +773,20 @@
             // Drive wheels
             const drivePositions = [-0.48, 0.48];
             drivePositions.forEach(z => {
-                const dWheel = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.06, 24), matRoller);
-                dWheel.rotation.x = Math.PI / 2;
-                dWheel.position.set(-0.55, -0.33, z);
-                robotGroup.add(dWheel);
+                const dWheelGroup = new THREE.Group();
+                dWheelGroup.position.set(-0.55, -0.33, z);
+                
+                // Tire (Dark grey)
+                const tire = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.06, 24), matDriveWheel);
+                tire.rotation.x = Math.PI / 2;
+                dWheelGroup.add(tire);
+                
+                // Hub Cap (Orange metal center)
+                const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.062, 16), matHub);
+                hub.rotation.x = Math.PI / 2;
+                dWheelGroup.add(hub);
+                
+                robotGroup.add(dWheelGroup);
             });
             
             // 2. Vertical Carriage slide plate (driven by ball screw)
@@ -789,7 +818,7 @@
                 
                 // Swingarm Tandem rollers at front tip
                 const rollerGroup = new THREE.Group();
-                rollerGroup.position.set(1.1, -0.015, 0);
+                rollerGroup.position.set(0.55, -0.015, 0);
                 
                 const rollerCylinder = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.08, 16), matRoller);
                 rollerCylinder.rotation.x = Math.PI / 2;
@@ -809,6 +838,115 @@
             // 4. Wooden Pallet (directly sits on forks)
             palletMesh = buildPalletGeometry(matPallet);
             palletMesh.position.set(0.6, 0.12, 0);
+            liftCarriage.add(palletMesh);
+        } else if (currentModel === 'stacker') {
+            // OPTION D: FL10 HIGH STACKER FORKLIFT
+            
+            // 1. Tall Chassis Backrest
+            chassisMesh = new THREE.Group();
+            
+            // Base block
+            const baseBlock = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.3, 0.95), matChassis);
+            baseBlock.position.set(-0.55, -0.15, 0);
+            chassisMesh.add(baseBlock);
+            
+            // Tall column housing (battery & sensors)
+            const tallCover = new THREE.Mesh(new THREE.BoxGeometry(0.35, 1.2, 0.6), matChassis);
+            tallCover.position.set(-0.6, 0.6, 0);
+            chassisMesh.add(tallCover);
+            
+            // Outrigger Stabilizing Legs extending forward
+            const legZOffsets = [-0.35, 0.35];
+            legZOffsets.forEach(z => {
+                const leg = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.08, 0.12), matChassis);
+                leg.position.set(-0.1, -0.26, z);
+                chassisMesh.add(leg);
+                
+                // Front tandem rollers inside leg tip
+                const roller = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.08, 16), matRoller);
+                roller.rotation.x = Math.PI / 2;
+                roller.position.set(0.3, -0.06, 0);
+                leg.add(roller);
+            });
+            
+            // LiDAR scanner
+            const lidarBase = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.06, 16), matDriveWheel);
+            lidarBase.position.set(-0.4, 0.18, 0.4);
+            chassisMesh.add(lidarBase);
+            const lidarCap = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 0.015, 16), matHub);
+            lidarCap.position.set(-0.4, 0.21, 0.4);
+            chassisMesh.add(lidarCap);
+            
+            // Emergency Stop Button
+            const estopBase = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.04, 0.02), matHub);
+            estopBase.position.set(-0.6, 1.21, 0.2);
+            chassisMesh.add(estopBase);
+            const estopButton = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, 0.02, 16), matHub);
+            estopButton.material.color.setHex(0xd97706); // Red
+            estopButton.position.set(-0.6, 1.23, 0.2);
+            chassisMesh.add(estopButton);
+            
+            robotGroup.add(chassisMesh);
+            
+            // Drive wheels (rear pivot drive)
+            const rearWheel = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.06, 24), matDriveWheel);
+            rearWheel.rotation.x = Math.PI / 2;
+            rearWheel.position.set(-0.65, -0.35, 0);
+            robotGroup.add(rearWheel);
+            
+            // 2. Outer Mast Channel (fixed vertical C-profiles)
+            const mastOuterGroup = new THREE.Group();
+            mastOuterGroup.position.set(-0.25, 0, 0);
+            
+            const mastL_outer = new THREE.Mesh(new THREE.BoxGeometry(0.06, 1.5, 0.06), matSteel);
+            mastL_outer.position.set(0, 0.5, -0.25);
+            const mastR_outer = mastL_outer.clone();
+            mastR_outer.position.z = 0.25;
+            mastOuterGroup.add(mastL_outer);
+            mastOuterGroup.add(mastR_outer);
+            robotGroup.add(mastOuterGroup);
+            
+            // 3. Inner Mast Channel (slides up/down inside outer mast)
+            innerMast = new THREE.Group();
+            innerMast.position.set(-0.25, 0, 0);
+            
+            const mastL_inner = new THREE.Mesh(new THREE.BoxGeometry(0.05, 1.4, 0.05), matChassisHD);
+            mastL_inner.position.set(0, 0.5, -0.23);
+            const mastR_inner = mastL_inner.clone();
+            mastR_inner.position.z = 0.23;
+            innerMast.add(mastL_inner);
+            innerMast.add(mastR_inner);
+            
+            // Pulley at the top of inner mast
+            const pulley = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.5, 16), matSteel);
+            pulley.rotation.x = Math.PI / 2;
+            pulley.position.set(0, 1.2, 0);
+            innerMast.add(pulley);
+            
+            robotGroup.add(innerMast);
+            
+            // 4. Lift Carriage & Forks (slides at 2:1 ratio)
+            liftCarriage = new THREE.Group();
+            liftCarriage.position.set(-0.2, -0.25, 0);
+            
+            // Carriage base plate sliding between channels
+            const carriagePlate = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.35, 0.5), matSteel);
+            carriagePlate.position.set(0, 0.1, 0);
+            liftCarriage.add(carriagePlate);
+            
+            // Forks extending forward
+            const forkZOffsets_stacker = [-0.18, 0.18];
+            forkZOffsets_stacker.forEach(z => {
+                const fork = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.04, 0.12), matSteel);
+                fork.position.set(0.5, 0.05, z);
+                liftCarriage.add(fork);
+            });
+            
+            robotGroup.add(liftCarriage);
+            
+            // 5. Pallet (resting on forks)
+            palletMesh = buildPalletGeometry(matPallet);
+            palletMesh.position.set(0.5, 0.15, 0);
             liftCarriage.add(palletMesh);
         }
     }
@@ -889,7 +1027,7 @@
                 // Active wheel deployment (Bogie swingarm pivots down)
                 // Lower wheels deploy as wheelsDown matches deployment state
                 if (state.wheelsDown === 1) {
-                    fork.roller.position.y = -0.06; // deployed to contact floor
+                    fork.roller.position.y = -0.21; // deployed to contact floor
                 } else {
                     fork.roller.position.y = -0.015; // retracted inside fork tip
                 }
@@ -903,11 +1041,24 @@
             // Passive wheel deployment linkage (linked directly to lift height)
             forks.forEach(fork => {
                 if (state.lift > 0.1) {
-                    fork.roller.position.y = -0.05; // deployed automatically
+                    fork.roller.position.y = -0.21; // deployed automatically
                 } else {
                     fork.roller.position.y = -0.015; // folded up when lowered
                 }
             });
+        } else if (currentModel === 'stacker') {
+            // Stacker double-stage nested mast animation
+            const liftRatio = state.lift; // 0 to 1
+            
+            // Inner mast lifts up to 0.6 units
+            if (innerMast) {
+                innerMast.position.y = liftRatio * 0.6;
+            }
+            
+            // Carriage and forks lift up to 1.2 units (2:1 leaf chain ratio)
+            if (liftCarriage) {
+                liftCarriage.position.y = -0.25 + (liftRatio * 1.2);
+            }
         }
         
         controls.update();
@@ -937,14 +1088,24 @@
         document.querySelectorAll('.config-card').forEach(card => card.classList.remove('active'));
         document.getElementById(`card-${modelType}`).classList.add('active');
         
-        // Show/hide deck extension slider (E10 standard doesn't extend, E10T does, flatbed extends load decks)
+        // Show/hide deck extension slider (E10 standard and FL10 stacker don't extend)
         const extSlider = document.getElementById('extension-control');
-        if (modelType === 'standard') {
+        if (modelType === 'standard' || modelType === 'stacker') {
             extSlider.style.opacity = '0.3';
             extSlider.style.pointerEvents = 'none';
         } else {
             extSlider.style.opacity = '1';
             extSlider.style.pointerEvents = 'auto';
+        }
+        
+        // Disable wheel deployment slider for Option D stacker
+        const wheelSlider = document.getElementById('slider-wheels').parentElement.parentElement;
+        if (modelType === 'stacker') {
+            wheelSlider.style.opacity = '0.3';
+            wheelSlider.style.pointerEvents = 'none';
+        } else {
+            wheelSlider.style.opacity = '1';
+            wheelSlider.style.pointerEvents = 'auto';
         }
         
         // Reset slider values
@@ -1011,6 +1172,11 @@
             heightHUD.innerHTML = '170<span>mm</span>';
             clearanceHUD.innerHTML = '45<span>mm</span>';
             pointsHUD.innerHTML = state.lift > 0.1 ? '8<span>pts</span>' : '6<span>pts</span>';
+        } else if (currentModel === 'stacker') {
+            payloadHUD.innerHTML = '1000<span>kg</span>';
+            heightHUD.innerHTML = '1500<span>mm</span>';
+            clearanceHUD.innerHTML = 'N/A<span>(Mast)</span>';
+            pointsHUD.innerHTML = '6<span>pts</span>';
         }
     }
 
@@ -1049,6 +1215,17 @@
                 <div style="font-size: 13px; font-weight: 600; color: var(--accent);">Fork Tip Casters:</div>
                 <div style="font-size: 11px; color: var(--text-muted);">**Passive Mechanical Pull-Rod** running inside fixed forks, linked directly to carriage vertical position. Auto-deploys wheels.</div>
             `;
+        } else if (currentModel === 'stacker') {
+            infoPanel.innerHTML = `
+                <div style="font-size: 13px; font-weight: 600; color: var(--accent);">Chassis & Drive Layout:</div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">Tall vertical backrest chassis, rear drive steering unit, front stabilizing outriggers.</div>
+                
+                <div style="font-size: 13px; font-weight: 600; color: var(--accent);">Mast Lift Subsystem:</div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">Nested dual-stage **steel C-profile masts** driven by central hydraulic cylinder and high-tensile leaf chains.</div>
+                
+                <div style="font-size: 13px; font-weight: 600; color: var(--accent);">Lift Ratio:</div>
+                <div style="font-size: 11px; color: var(--text-muted);">Uses a **2:1 chain hoist ratio** to lift the carriage up to 2.5 meters.</div>
+            `;
         }
     }
 
@@ -1065,6 +1242,22 @@
                     updateSimulation();
                     step++;
                 } else if (step < 70) { // lower platform
+                    state.lift -= 0.05;
+                    document.getElementById('slider-lift').value = Math.max(0, Math.round(state.lift * 100));
+                    updateSimulation();
+                    step++;
+                } else {
+                    clearInterval(interval);
+                }
+            } else if (currentModel === 'stacker') {
+                if (step < 20) { // approach
+                    step++;
+                } else if (step < 55) { // lift mast and carriage (2:1 ratio)
+                    state.lift += 0.028;
+                    document.getElementById('slider-lift').value = Math.min(100, Math.round(state.lift * 100));
+                    updateSimulation();
+                    step++;
+                } else if (step < 75) { // lower mast and carriage
                     state.lift -= 0.05;
                     document.getElementById('slider-lift').value = Math.max(0, Math.round(state.lift * 100));
                     updateSimulation();
