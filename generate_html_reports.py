@@ -696,4 +696,9 @@ if __name__ == "__main__":
         "/home/charan/.gemini/antigravity-ide/scratch/tusk-amr-analysis/mechanisms_report.html",
         "Pallet AMR Mechanisms & Components Report"
     )
+    build_report_html(
+        "/home/charan/.gemini/antigravity-ide/scratch/tusk-amr-analysis/sequential_slide_report.md",
+        "/home/charan/.gemini/antigravity-ide/scratch/tusk-amr-analysis/sequential_slide_report.html",
+        "Sequential Latching Telescopic Slide Report"
+    )
     excel_to_html_tabs()

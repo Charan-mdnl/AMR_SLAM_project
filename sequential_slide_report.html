@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sequential Latching Telescopic Slide Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(30, 41, 59, 0.7);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        h1 {
+            font-size: 2.2rem;
+            color: #38bdf8;
+            border-bottom: 2px solid rgba(56, 189, 248, 0.3);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h2 {
+            font-size: 1.6rem;
+            color: #38bdf8;
+            margin-top: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 5px;
+        }
+        h3 {
+            font-size: 1.25rem;
+            color: #f1f5f9;
+            margin-top: 20px;
+        }
+        p {
+            color: #cbd5e1;
+            margin-bottom: 20px;
+        }
+        ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+            color: #cbd5e1;
+        }
+        .math {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(15, 23, 42, 0.6);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #f472b6;
+            font-size: 0.9em;
+        }
+        hr {
+            border: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 30px 0;
+        }
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid;
+        }
+        .alert-important {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: #ef4444;
+            color: #fca5a5;
+        }
+        .alert-note {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: #3b82f6;
+            color: #93c5fd;
+        }
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.95rem;
+        }
+        .report-table th, .report-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .report-table th {
+            background-color: rgba(15, 23, 42, 0.6);
+            color: #38bdf8;
+            font-weight: 500;
+        }
+        .report-table tr:hover {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+        .code-block {
+            background: #090d16;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin: 20px 0;
+        }
+        pre, code {
+            font-family: 'JetBrains Mono', monospace;
+            margin: 0;
+            color: #a7f3d0;
+        }
+        .img-container {
+            text-align: center;
+            margin: 30px 0;
+            background: rgba(15, 23, 42, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            page-break-inside: avoid;
+        }
+        .report-image {
+            max-width: 100%;
+            max-height: 550px;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .img-caption {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-top: 12px;
+            font-style: italic;
+            font-weight: 500;
+        }
+        .btn-print {
+            display: inline-block;
+            background: #0284c7;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 25px;
+            transition: background 0.2s;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+        .btn-print:hover {
+            background: #0369a1;
+        }
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 20mm 15mm 20mm 15mm;
+            }
+            body {
+                background-color: white;
+                color: black;
+                padding: 0;
+                margin: 0;
+            }
+            .container {
+                background: none;
+                box-shadow: none;
+                padding: 0;
+                border: none;
+                max-width: 100%;
+            }
+            .btn-print {
+                display: none;
+            }
+            h1, h2, h3, .report-table th {
+                color: black;
+                page-break-after: avoid;
+            }
+            p, li, td {
+                color: #222;
+            }
+            tr, li, .code-block, .img-container {
+                page-break-inside: avoid;
+            }
+            .math {
+                background: #f1f5f9;
+                color: #b91c1c;
+            }
+            .code-block {
+                background: #fafafa;
+                border: 1px solid #ddd;
+            }
+            code {
+                color: #111827;
+            }
+            .img-container {
+                background: none;
+                border: none;
+                padding: 10px 0;
+            }
+            .report-image {
+                border: 1px solid #ccc;
+            }
+            .img-caption {
+                color: #444;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="btn-print" onclick="window.print()">Print / Export as PDF</button>
+        <h1>Sequenced Latching Telescopic Slide Mechanism (Umbrella-Style Detent Lock)</h1><p>This engineering document details the design, kinematics, and commercial sourcing options for a 3-stage sequenced latching telescopic slide mechanism. It is designed to extend from the main AMR chassis to maintain a precise 50 cm (500 mm) gap, utilizing a spring-loaded mechanical lock to regulate stage extension.</p><hr><h2>1. Design Overview & Kinematic Sequence</h2><p>Telescopic slides without sequencing mechanisms can extend in random orders due to friction variation, causing increased load torque and wear. A <strong>Sequenced Telescopic Slide</strong> forces the stages to open and close in a strict, controlled order.</p><h3>Extension Cycle (Chassis to Max Extension)</h3><p>1. <strong>Initial State (Retracted):</strong> The inner stage, intermediate stage, and fixed outer stage are nested. The intermediate stage is locked to the chassis frame via a spring-loaded latch.</p><p>2. <strong>Inner Stage Extension:</strong> The BLDC motor drives a lead screw (or belt) linked to the inner stage. As the motor turns, the inner stage is pushed forward while the intermediate stage remains locked in place.</p><p>3. <strong>Latch Transition:</strong> Once the inner stage reaches its maximum travel (approx. 250 mm extension), it strikes a release trigger or engages a spring-loaded snap button. This action locks the inner stage to the intermediate stage and unlocks the intermediate stage from the chassis.</p><p>4. <strong>Intermediate Stage Extension:</strong> The motor continues to push, forcing both stages forward together for the remaining 250 mm of travel, achieving the target 500 mm (50 cm) gap.</p><h3>Retraction Cycle (Max Extension to Retracted)</h3><p>1. <strong>Intermediate Stage Retraction:</strong> As the motor reverses, it pulls the intermediate stage back toward the chassis first.</p><p>2. <strong>Chassis Strike & Release:</strong> As the intermediate stage enters the chassis pocket, a release ramp on the outer chassis depresses the spring-loaded button/latch.</p><p>3. <strong>Inner Stage Retraction:</strong> Depressing the latch unlocks the inner stage from the intermediate stage, while locking the intermediate stage back to the chassis. The motor then pulls the inner stage back to the home position.</p><hr><h2>2. Technical Schematic</h2><p>Below is the detailed engineering layout of the 3-stage telescopic slide and the cross-sectional view of the spring-loaded detent mechanism:</p><div class='img-container'><img src='sequential_telescopic_lock_schematic.png' alt='3-Stage Telescopic Mechanism Technical Schematic Diagram (Illustrative Schematic / Non-Realistic)' class='report-image' /><div class='img-caption'>3-Stage Telescopic Mechanism Technical Schematic Diagram (Illustrative Schematic / Non-Realistic)</div></div><hr><h2>3. Realistic 3D CAD Representation</h2><p>This visualization illustrates a heavy-duty industrial U-profile telescopic slide with an integrated spring-loaded locking detent:</p><div class='img-container'><img src='realistic_3d_telescopic_sequenced_slide.png' alt='Heavy-Duty Polished Stainless Steel Telescopic Slide with Snap-Button Release (Realistic 3D CAD Render)' class='report-image' /><div class='img-caption'>Heavy-Duty Polished Stainless Steel Telescopic Slide with Snap-Button Release (Realistic 3D CAD Render)</div></div><hr><h2>4. Real-World Commercial Sourcing Options</h2><p>If you are sourcing this mechanism or designing custom slides based on industry-standard components, the following premium manufacturers offer compatible sequential locking slides:</p><ul><li><strong>Chambrelan Sequenced Telescopic Slides (https://www.chambrelan.com):</strong></li><li><em>Compatible Series:</em> <strong>RA7R</strong> and <strong>ST708S</strong> series.</li><li><em>Features:</em> Offers customized sequential opening devices (synchronized slides) as an option for their 3-stage steel and aluminum rails, ensuring ball cages stay aligned and preventing intermediate beam drift.</li><li><em>Link:</em> [Chambrelan Industrial Slides](https://chambrelan.com/en/heavy-duty-telescopic-slide-linear-rail/)</li><li><strong>Rollon Telescopic Rails (https://www.rollon.com):</strong></li><li><em>Compatible Series:</em> <strong>Telescopic Rail (ASN, DE, DBN)</strong> ranges.</li><li><em>Features:</em> Rollon offers heavy-duty slides with end-stop dampers and optional mechanical sequencing configurations for linear automation.</li><li><em>Link:</em> [Rollon Telescopic Rail Series](https://www.rollon.com/global/en/product-lines/telescopic-rail/)</li><li><strong>Accuride Industrial Locking Slides (https://www.accuride.com):</strong></li><li><em>Compatible Series:</em> <strong>9308 / 9301 Heavy-Duty</strong> series.</li><li><em>Features:</em> Features lock-in/lock-out detents, sequenced mechanical extensions, and high cantilever load support (up to 270 kg capacity).</li><li><em>Link:</em> [Accuride Heavy-Duty Slides](https://www.accuride.com/en-us/products/heavy-duty-slides)</li></ul><hr><h2>5. References & Technical Citations</h2><ul><li><strong>Chambrelan Technical Support (https://www.chambrelan.com):</strong> Consulted for mechanical synchronizing and sequential latching specifications.</li><li><strong>Elesa+Ganter Indexing Plungers (https://www.elesa-ganter.com):</strong> Consulted for spring-loaded detent dimensions and pin locking load limits.</li><li><strong>Rollon Engineering Calculators (https://www.rollon.com):</strong> Referenced for cantilever moment calculations and deflection limits.</li>
+    </div>
+</body>
+</html>
