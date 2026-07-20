@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stepper Motor Drive Guide for Telescopic Slides</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(30, 41, 59, 0.7);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        h1 {
+            font-size: 2.2rem;
+            color: #38bdf8;
+            border-bottom: 2px solid rgba(56, 189, 248, 0.3);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h2 {
+            font-size: 1.6rem;
+            color: #38bdf8;
+            margin-top: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 5px;
+        }
+        h3 {
+            font-size: 1.25rem;
+            color: #f1f5f9;
+            margin-top: 20px;
+        }
+        p {
+            color: #cbd5e1;
+            margin-bottom: 20px;
+        }
+        ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+            color: #cbd5e1;
+        }
+        .math {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(15, 23, 42, 0.6);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #f472b6;
+            font-size: 0.9em;
+        }
+        hr {
+            border: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 30px 0;
+        }
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid;
+        }
+        .alert-important {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: #ef4444;
+            color: #fca5a5;
+        }
+        .alert-note {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: #3b82f6;
+            color: #93c5fd;
+        }
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.95rem;
+        }
+        .report-table th, .report-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .report-table th {
+            background-color: rgba(15, 23, 42, 0.6);
+            color: #38bdf8;
+            font-weight: 500;
+        }
+        .report-table tr:hover {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+        .code-block {
+            background: #090d16;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin: 20px 0;
+        }
+        pre, code {
+            font-family: 'JetBrains Mono', monospace;
+            margin: 0;
+            color: #a7f3d0;
+        }
+        .img-container {
+            text-align: center;
+            margin: 30px 0;
+            background: rgba(15, 23, 42, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            page-break-inside: avoid;
+        }
+        .report-image {
+            max-width: 100%;
+            max-height: 550px;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .img-caption {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-top: 12px;
+            font-style: italic;
+            font-weight: 500;
+        }
+        .btn-print {
+            display: inline-block;
+            background: #0284c7;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 25px;
+            transition: background 0.2s;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+        .btn-print:hover {
+            background: #0369a1;
+        }
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 20mm 15mm 20mm 15mm;
+            }
+            body {
+                background-color: white;
+                color: black;
+                padding: 0;
+                margin: 0;
+            }
+            .container {
+                background: none;
+                box-shadow: none;
+                padding: 0;
+                border: none;
+                max-width: 100%;
+            }
+            .btn-print {
+                display: none;
+            }
+            h1, h2, h3, .report-table th {
+                color: black;
+                page-break-after: avoid;
+            }
+            p, li, td {
+                color: #222;
+            }
+            tr, li, .code-block, .img-container {
+                page-break-inside: avoid;
+            }
+            .math {
+                background: #f1f5f9;
+                color: #b91c1c;
+            }
+            .code-block {
+                background: #fafafa;
+                border: 1px solid #ddd;
+            }
+            code {
+                color: #111827;
+            }
+            .img-container {
+                background: none;
+                border: none;
+                padding: 10px 0;
+            }
+            .report-image {
+                border: 1px solid #ccc;
+            }
+            .img-caption {
+                color: #444;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="btn-print" onclick="window.print()">Print / Export as PDF</button>
+        <h1>Stepper Motor Drive Guide for AMR Telescopic Slides</h1><p>This guide explains how to operate, configure, and manage a telescopic slide mechanism using a stepper motor. It details low-level hardware control, comparison of drive types, microcontroller logic, and compares it to how Tusk Robots manages its telescoping tynes.</p><hr><h2>1. How to Operate a Stepper Motor (Low-Level Control)</h2><p>To operate a stepper motor on an AMR, you need three core components in the electronic control stack:</p><div class='code-block'><code class='language-'><pre>[ Microcontroller / PLC ] ──► [ Stepper Driver ] ──► [ Stepper Motor ] ──► [ Telescopic Slide ]
+  (Teensy / STM32 / CAN)        (DM556 / CL57T)        (NEMA 23/24)
+</pre></code></div><h3>A. Closed-Loop vs. Open-Loop Stepper Systems</h3><ul><li><strong>Open-Loop (Not Recommended for AMRs):</strong> Simple and cheap, but if the forks encounter an obstruction (e.g., hitting a pallet wall), the motor will lose steps, causing the navigation system to lose track of the fork extension distance.</li><li><strong>Closed-Loop (Recommended):</strong> Utilizes a NEMA 23/24 stepper motor with an <strong>integrated rotary encoder</strong> (typically 1000 to 4000 CPR). The driver monitors the encoder feedback and automatically adjusts current to prevent step loss and can signal a fault to the main controller if a stall occurs.</li></ul><h3>B. Controller Interface Methods</h3><p>1. <strong>Pulse & Direction (PUL / DIR):</strong></p><ul><li>The microcontroller sends a square-wave frequency to the driver's <strong>PUL</strong> pin (1 pulse = 1 microstep rotation) and toggles the <strong>DIR</strong> pin high/low to control direction.</li><li>A third <strong>ENA</strong> (Enable) pin is toggled to power on/off the motor coils.</li></ul><p>2. <strong>Fieldbus Control (CANopen / Modbus RTU):</strong></p><ul><li>Uses serial communication lines to send command packets (e.g., "Go to position 5000 steps at speed 1000 RPM"). This eliminates pulse wiring and allows the controller to read real-time torque and speed values from the driver.</li></ul><hr><h2>2. Stepper Drive Configurations (Types of Drives)</h2><h3>Option A: Timing Belt & Pulley Drive</h3><p>The stepper motor is mounted at the rear of the slide and rotates a driving pulley, which pulls a loop of heavy-duty timing belt (e.g., GT2 6mm or 9mm width) attached to the moving stages.</p><ul><li><strong>Diagram:</strong></li></ul><div class='img-container'><img src='stepper_motor_telescopic_drive_schematic.png' alt='NEMA 23 Stepper Driven 3-Stage Telescopic Slide Timing Belt System (Illustrative Schematic / Non-Realistic)' class='report-image' /><div class='img-caption'>NEMA 23 Stepper Driven 3-Stage Telescopic Slide Timing Belt System (Illustrative Schematic / Non-Realistic)</div></div><ul><li><strong>Key Specifications:</strong></li><li><strong>Stepper Motor:</strong> NEMA 23 High-Torque (<span class="math">1.8^\circ</span> step angle, 2.2 Nm holding torque)</li><li><strong>Stepper Driver:</strong> DM556T (24V-50V DC power supply, set to 1600 steps/revolution microstepping)</li><li><strong>Drive Pulley:</strong> 20-Tooth GT2 Pulley (<span class="math">\varnothing 6.35\text{ mm}</span> bore to match motor shaft)</li><li><strong>Performance:</strong> High extension speed, quiet operation, but susceptible to belt stretch under heavy load.</li></ul><hr><h3>Option B: Ball Screw Drive</h3><p>The stepper motor is coupled directly to a precision ball screw (e.g., SFU1605) using a flexible jaw coupling. As the screw rotates, the ball nut drives the intermediate stage.</p><ul><li><strong>CAD Render:</strong></li></ul><div class='img-container'><img src='realistic_3d_stepper_telescopic_assembly.png' alt='NEMA 24 Closed-Loop Stepper coupled to Ball Screw Telescopic Assembly (Realistic 3D CAD Render)' class='report-image' /><div class='img-caption'>NEMA 24 Closed-Loop Stepper coupled to Ball Screw Telescopic Assembly (Realistic 3D CAD Render)</div></div><ul><li><strong>Key Specifications:</strong></li><li><strong>Stepper Motor:</strong> NEMA 24 Closed-Loop Stepper with Integrated Encoder</li><li><strong>Drive System:</strong> SFU1605 Ball Screw (<span class="math">16\text{ mm}</span> diameter, <span class="math">5\text{ mm}</span> lead)</li><li><strong>Coupling:</strong> Flexible D30L40 Plum Coupling (<span class="math">8\text{ mm}</span> to <span class="math">10\text{ mm}</span> bore)</li><li><strong>Limit Switches:</strong> Inductive Proximity Sensors (LJ12A3-4-Z/BX) at both travel limits</li><li><strong>Performance:</strong> Extreme thrust force, zero back-driving, high precision, but slower extension speed.</li></ul><hr><h2>3. Low-Level Control Logic (STM32/Arduino Pseudo-code)</h2><p>Below is the control logic for homing, extending, and detecting obstructions using a pulse-generator microcontroller:</p><div class='code-block'><code class='language-cpp'><pre>// Pin Definitions
+const int pulPin = 3;
+const int dirPin = 4;
+const int enPin = 5;
+const int limitHome = 6;      // Retracted limit switch
+const int limitExtended = 7;  // Fully extended limit switch
+const int driverFault = 8;    // Fault signal from Closed-Loop driver
+
+void setup() {
+  pinMode(pulPin, OUTPUT);
+  pinMode(dirPin, OUTPUT);
+  pinMode(enPin, OUTPUT);
+  pinMode(limitHome, INPUT_PULLUP);
+  pinMode(limitExtended, INPUT_PULLUP);
+  pinMode(driverFault, INPUT);
+  
+  digitalWrite(enPin, HIGH); // Enable motor coils
+  homeForks();
+}
+
+void homeForks() {
+  // Step backward slowly until home limit switch is triggered
+  digitalWrite(dirPin, LOW); 
+  while (digitalRead(limitHome) == HIGH) {
+    digitalWrite(pulPin, HIGH);
+    delayMicroseconds(1000); // Homing speed
+    digitalWrite(pulPin, LOW);
+    delayMicroseconds(1000);
+  }
+  // Reset step counter
+  currentPositionSteps = 0;
+}
+
+void extendForks(long targetSteps) {
+  digitalWrite(dirPin, HIGH); // Extend direction
+  
+  for (long i = 0; i < targetSteps; i++) {
+    // Check for safety limit switch or driver fault
+    if (digitalRead(limitExtended) == LOW || digitalRead(driverFault) == HIGH) {
+      stopMotor();
+      break;
+    }
+    
+    // Pulse output (implementing simple ramp profile for acceleration)
+    int pulseDelay = calculateRampDelay(i, targetSteps);
+    digitalWrite(pulPin, HIGH);
+    delayMicroseconds(pulseDelay);
+    digitalWrite(pulPin, LOW);
+    delayMicroseconds(pulseDelay);
+  }
+}
+</pre></code></div><hr><h2>4. How Telescoping Slides are Managed in Tusk Robots</h2><p>In official commercial Tusk AMRs (such as the E10T telescopic fork model), the telescoping mechanism is managed via a robust industrial architecture:</p><p>1. <strong>Integrated Geared Servos (Instead of Open-Loop Steppers):</strong></p><p>Tusk uses high-efficiency <strong>brushless DC geared servo motors</strong> or <strong>closed-loop hybrid step-servos</strong> operating on a 24V or 48V DC bus. They are geared down (typically 1:10 or 1:15) to multiply torque for handling heavy pallets.</p><p>2. <strong>CANopen Network Interface:</strong></p><p>The motor drives communicate with the low-level micro-ROS node (running on an STM32 MCU) via a <strong>CANopen fieldbus</strong> loop. This allows the robot to send precise velocity and position commands and read motor temperature, current, and encoder counts in real-time.</p><p>3. <strong>Dual Fork Synchronization:</strong></p><p>The Tusk E10T uses a single motor linked to a transverse splined shaft that drives the left and right telescopic slides together. This mechanical lock ensures the forks extend in perfect synchronization, preventing binding.</p><p>4. <strong>Current-Limit Obstruction Detection:</strong></p><p>The STM32 low-level safety controller constantly monitors the current consumption of the fork drive motor. If the current spikes above a safety threshold (indicating that the forks have collided with a pallet beam or obstruction), the MCU immediately commands a halt, cuts driver power, and triggers a ROS E-stop alert.</p><p>5. <strong>Inductive Limit Proximity Sensors:</strong></p><p>PNP-type inductive proximity sensors are mounted at the retracted (home) and fully-extended limits inside the fork casing. They act as hard-stop electrical interlocks to prevent mechanical crash damage.</p>
+    </div>
+</body>
+</html>

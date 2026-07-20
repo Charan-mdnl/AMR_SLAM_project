@@ -701,4 +701,14 @@ if __name__ == "__main__":
         "/home/charan/.gemini/antigravity-ide/scratch/tusk-amr-analysis/sequential_slide_report.html",
         "Sequential Latching Telescopic Slide Report"
     )
+    build_report_html(
+        "/home/charan/.gemini/antigravity-ide/scratch/tusk-amr-analysis/stepper_drive_guide.md",
+        "/home/charan/.gemini/antigravity-ide/scratch/tusk-amr-analysis/stepper_drive_guide.html",
+        "Stepper Motor Drive Guide for Telescopic Slides"
+    )
+    build_report_html(
+        "/home/charan/.gemini/antigravity-ide/scratch/tusk-amr-analysis/tusk_e_series_cad_design_guide.md",
+        "/home/charan/.gemini/antigravity-ide/scratch/tusk-amr-analysis/tusk_e_series_cad_design_guide.html",
+        "Tusk Robots E-Series CAD Design & Dimensioning Guide"
+    )
     excel_to_html_tabs()

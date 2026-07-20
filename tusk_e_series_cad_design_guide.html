@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tusk Robots E-Series CAD Design & Dimensioning Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(30, 41, 59, 0.7);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        h1 {
+            font-size: 2.2rem;
+            color: #38bdf8;
+            border-bottom: 2px solid rgba(56, 189, 248, 0.3);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h2 {
+            font-size: 1.6rem;
+            color: #38bdf8;
+            margin-top: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 5px;
+        }
+        h3 {
+            font-size: 1.25rem;
+            color: #f1f5f9;
+            margin-top: 20px;
+        }
+        p {
+            color: #cbd5e1;
+            margin-bottom: 20px;
+        }
+        ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+            color: #cbd5e1;
+        }
+        .math {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(15, 23, 42, 0.6);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #f472b6;
+            font-size: 0.9em;
+        }
+        hr {
+            border: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 30px 0;
+        }
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid;
+        }
+        .alert-important {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: #ef4444;
+            color: #fca5a5;
+        }
+        .alert-note {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: #3b82f6;
+            color: #93c5fd;
+        }
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.95rem;
+        }
+        .report-table th, .report-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .report-table th {
+            background-color: rgba(15, 23, 42, 0.6);
+            color: #38bdf8;
+            font-weight: 500;
+        }
+        .report-table tr:hover {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+        .code-block {
+            background: #090d16;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin: 20px 0;
+        }
+        pre, code {
+            font-family: 'JetBrains Mono', monospace;
+            margin: 0;
+            color: #a7f3d0;
+        }
+        .img-container {
+            text-align: center;
+            margin: 30px 0;
+            background: rgba(15, 23, 42, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            page-break-inside: avoid;
+        }
+        .report-image {
+            max-width: 100%;
+            max-height: 550px;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .img-caption {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-top: 12px;
+            font-style: italic;
+            font-weight: 500;
+        }
+        .btn-print {
+            display: inline-block;
+            background: #0284c7;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 25px;
+            transition: background 0.2s;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+        .btn-print:hover {
+            background: #0369a1;
+        }
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 20mm 15mm 20mm 15mm;
+            }
+            body {
+                background-color: white;
+                color: black;
+                padding: 0;
+                margin: 0;
+            }
+            .container {
+                background: none;
+                box-shadow: none;
+                padding: 0;
+                border: none;
+                max-width: 100%;
+            }
+            .btn-print {
+                display: none;
+            }
+            h1, h2, h3, .report-table th {
+                color: black;
+                page-break-after: avoid;
+            }
+            p, li, td {
+                color: #222;
+            }
+            tr, li, .code-block, .img-container {
+                page-break-inside: avoid;
+            }
+            .math {
+                background: #f1f5f9;
+                color: #b91c1c;
+            }
+            .code-block {
+                background: #fafafa;
+                border: 1px solid #ddd;
+            }
+            code {
+                color: #111827;
+            }
+            .img-container {
+                background: none;
+                border: none;
+                padding: 10px 0;
+            }
+            .report-image {
+                border: 1px solid #ccc;
+            }
+            .img-caption {
+                color: #444;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="btn-print" onclick="window.print()">Print / Export as PDF</button>
+        <h1>Tusk Robots E-Series (Invisible Fork Arm) Pallet AMR - CAD Design & Dimensioning Guide</h1><p>This document provides all verified dimensions, mechanical specifications, tolerances, and CAD blueprint sheets required to 3D model and manufacture the <strong>Tusk Robots E-Series Low-Profile Pallet AMR</strong> (E10 Standard & E10T Telescopic "Invisible Fork Arm" models).</p><hr><h2>1. Master CAD Dimensioning Summary</h2><p>Below is the consolidated master dimensions table to be used directly in SolidWorks, Fusion 360, or Inventor for 3D modeling:</p><table class='report-table'><thead><tr><th>Engineering Parameter</th><th>Dimension (mm)</th><th>Tolerance</th><th>Notes & CAD Reference</th></tr></thead><tbody><tr><td><strong>Overall Robot Length</strong></td><td><strong>1233 mm</strong></td><td><span class="math">\pm 1.0\text{ mm}</span></td><td>Front bumper to rear caster housing</td></tr><tr><td><strong>Overall Robot Width</strong></td><td><strong>1120 mm</strong></td><td><span class="math">\pm 1.0\text{ mm}</span></td><td>Outer steel weldment frame envelope</td></tr><tr><td><strong>Chassis Lowered Height</strong></td><td><strong>170 mm</strong></td><td><span class="math">\pm 0.5\text{ mm}</span></td><td>Top of platform to floor (lowered)</td></tr><tr><td><strong>Max Lift Height (Top of Deck)</strong></td><td><strong>330 mm</strong></td><td><span class="math">\pm 1.0\text{ mm}</span></td><td>Total vertical lift travel: <span class="math">160\text{ mm}</span></td></tr><tr><td><strong>Fork Assembly Outer Width</strong></td><td><strong>560 mm</strong></td><td><span class="math">\pm 0.5\text{ mm}</span></td><td>Fits standard EUR-2 / ISO pallets</td></tr><tr><td><strong>Fork Assembly Inner Gap</strong></td><td><strong>240 mm</strong></td><td><span class="math">\pm 0.5\text{ mm}</span></td><td>Space between left and right tynes</td></tr><tr><td><strong>Individual Tyne Width</strong></td><td><strong>160 mm</strong></td><td><span class="math">\pm 0.5\text{ mm}</span></td><td><span class="math">\frac{560 - 240}{2} = 160\text{ mm}</span> tyne width</td></tr><tr><td><strong>Fork Nominal Length (E10)</strong></td><td><strong>1100 mm</strong></td><td><span class="math">\pm 1.0\text{ mm}</span></td><td>Standard fixed length fork tyne</td></tr><tr><td><strong>Fork Extension Reach (E10T)</strong></td><td><strong>1400 mm max</strong></td><td><span class="math">\pm 2.0\text{ mm}</span></td><td>Multi-stage telescopic reach</td></tr><tr><td><strong>Drive Wheel Diameter</strong></td><td><strong><span class="math">\varnothing 200\text{ mm}</span></strong></td><td><span class="math">\pm 0.2\text{ mm}</span></td><td>Polyurethane tread, <span class="math">65\text{ mm}</span> width</td></tr><tr><td><strong>Tandem Load Roller Diameter</strong></td><td><strong><span class="math">\varnothing 60\text{ mm}</span></strong></td><td><span class="math">\pm 0.2\text{ mm}</span></td><td>Polyurethane 95A, <span class="math">180\text{ mm}</span> length</td></tr><tr><td><strong>Roller Bogie Outer Length</strong></td><td><strong>198 mm</strong></td><td><span class="math">\pm 0.5\text{ mm}</span></td><td>Fits <span class="math">180\text{ mm}</span> roller + <span class="math">2\times 8\text{ mm}</span> plates</td></tr><tr><td><strong>Roller Shaft Specs</strong></td><td><strong><span class="math">\varnothing 20\text{ h6} \times 188\text{ mm}</span></strong></td><td><span class="math">\pm 0.1\text{ mm}</span></td><td>EN8 Steel with circlip grooves</td></tr><tr><td><strong>Minimum Ground Clearance</strong></td><td><strong>25 mm</strong></td><td><span class="math">\pm 0.5\text{ mm}</span></td><td>Chassis base plate to floor clearance</td></tr></tbody></table><hr><h2>2. 2D Master CAD Dimensioned Blueprint Sheet</h2><p>Use the engineering drawing sheet below for placing sketch origins, centerlines, and datum planes during 3D CAD modeling:</p><div class='img-container'><img src='tusk_e10_cad_dimensioned_drawing.png' alt='Tusk E-Series Low-Profile Pallet AMR Master 2D CAD Dimensioned Blueprint Sheet (Illustrative Schematic / Non-Realistic)' class='report-image' /><div class='img-caption'>Tusk E-Series Low-Profile Pallet AMR Master 2D CAD Dimensioned Blueprint Sheet (Illustrative Schematic / Non-Realistic)</div></div><hr><h2>3. Product Family Real Models Showcase</h2><h3>A. Tusk Model E10 (Standard Low-Profile Pallet AMR)</h3><p>Integrated low-profile pallet AMR featuring fixed-length "invisible" fork tynes and passive mechanical pull-rod wheel deployment.</p><ul><li><strong>Payload Rating:</strong> <span class="math">1000\text{ kg}</span></li><li><strong>Real Product Photo:</strong></li></ul><div class='img-container'><img src='model_e10.png' alt='Real Tusk E10 / E10D Standard Low-Profile Pallet AMR Product Photo' class='report-image' /><div class='img-caption'>Real Tusk E10 / E10D Standard Low-Profile Pallet AMR Product Photo</div></div><h3>B. Tusk Model E10T (Telescopic Extending Fork AMR)</h3><p>Equipped with dual-stage telescoping tynes that extend up to <span class="math">1400\text{ mm}</span> out into pallet racks while the AMR remains stationary.</p><ul><li><strong>Payload Rating:</strong> <span class="math">1000\text{ kg}</span></li><li><strong>Extension Reach:</strong> <span class="math">1400\text{ mm}</span></li><li><strong>Real Product Photo:</strong></li></ul><div class='img-container'><img src='model_e10t.png' alt='Real Tusk E10T Telescopic Extending Fork Pallet AMR Product Photo' class='report-image' /><div class='img-caption'>Real Tusk E10T Telescopic Extending Fork Pallet AMR Product Photo</div></div><hr><h2>4. Detailed Component Bill of Materials (BOM) & Materials</h2><p>When modeling individual parts and assemblies, use the following material assignments and component callouts:</p><table class='report-table'><thead><tr><th>Item No.</th><th>Component Name</th><th>Material / Spec</th><th>Quantity</th><th>Critical Dimensions / Notes</th></tr></thead><tbody><tr><td><strong>1</strong></td><td><strong>Base Frame Weldment</strong></td><td>Q235 Steel Tube (<span class="math">80\times 60\times 4\text{ mm}</span>)</td><td>1 Set</td><td>Inner frame cutout: <span class="math">960\text{ mm} \times 713\text{ mm}</span></td></tr><tr><td><strong>2</strong></td><td><strong>Top Platform (Fork Deck)</strong></td><td>Q235 Steel Plate (<span class="math">8\text{ mm}</span>)</td><td>1 Pc</td><td>Overall: <span class="math">1100\times 560\text{ mm}</span>; <span class="math">8\times \varnothing 11\text{ mm}</span> holes</td></tr><tr><td><strong>3</strong></td><td><strong>Scissor Arm (Part 1)</strong></td><td>Rectangular Tube (<span class="math">60\times 40\times 6\text{ mm}</span>)</td><td>2 Pcs</td><td>Total length: <span class="math">760\text{ mm}</span>; Pivot C-to-C: <span class="math">720\text{ mm}</span></td></tr><tr><td><strong>4</strong></td><td><strong>Scissor Arm (Part 2)</strong></td><td>Rectangular Tube (<span class="math">60\times 40\times 6\text{ mm}</span>)</td><td>2 Pcs</td><td>Mirrored cross arm with central <span class="math">\varnothing 20\text{ H7}</span> bore</td></tr><tr><td><strong>5</strong></td><td><strong>Cross Pin (Pivot)</strong></td><td>EN8 Steel (<span class="math">\varnothing 20\text{ h6}</span>)</td><td>4 Pcs</td><td>Body length: <span class="math">120\text{ mm}</span>; Total length: <span class="math">140\text{ mm}</span></td></tr><tr><td><strong>6</strong></td><td><strong>Pivot Bushing</strong></td><td>Bronze CuSn12</td><td>8 Pcs</td><td>Outer: <span class="math">\varnothing 25\text{ h6}</span>, Inner: <span class="math">\varnothing 20\text{ H7}</span>, Length: <span class="math">25\text{ mm}</span></td></tr><tr><td><strong>7</strong></td><td><strong>Ball Screw Shaft</strong></td><td>SCM415 Hardened Steel</td><td>1 Pc</td><td>Spec: SFU2505 (Dia <span class="math">25\text{ mm}</span>, Lead <span class="math">5\text{ mm}</span>), <span class="math">600\text{ mm}</span> L</td></tr><tr><td><strong>8</strong></td><td><strong>Ball Nut & Housing</strong></td><td>Cast Steel Block</td><td>1 Pc</td><td>Nut body: <span class="math">\varnothing 40\text{ mm}</span>, Flange: <span class="math">55\text{ mm}</span> sq, <span class="math">4\times \varnothing 9</span> holes</td></tr><tr><td><strong>9</strong></td><td><strong>BK15 Bearing Block</strong></td><td>Cast Iron Housing</td><td>2 Pcs</td><td>Base: <span class="math">89\times 34\text{ mm}</span>, Height: <span class="math">39\text{ mm}</span>, Bore: <span class="math">\varnothing 15\text{ mm}</span></td></tr><tr><td><strong>10</strong></td><td><strong>Drive Motor</strong></td><td>750W 24V BLDC Motor</td><td>2 Pcs</td><td>Rated speed: <span class="math">3000\text{ RPM}</span>, Gearbox ratio: 1:20</td></tr><tr><td><strong>11</strong></td><td><strong>Lift Motor</strong></td><td>1000W 24V BLDC Motor</td><td>1 Pc</td><td>Rated speed: <span class="math">3000\text{ RPM}</span>, Gearbox ratio: 1:15</td></tr><tr><td><strong>12</strong></td><td><strong>Roller Bogie Housing</strong></td><td>Q235 Steel Plate (<span class="math">8\text{ mm}</span>)</td><td>2 Sets</td><td>Outer length: <span class="math">198\text{ mm}</span>, Height: <span class="math">102\text{ mm}</span>, Width: <span class="math">75\text{ mm}</span></td></tr><tr><td><strong>13</strong></td><td><strong>Polyurethane Roller</strong></td><td>Polyurethane 95A Shore</td><td>4 Pcs</td><td>Outer dia: <span class="math">\varnothing 60\text{ mm}</span>, Inner dia: <span class="math">\varnothing 20\text{ mm}</span>, Length: <span class="math">180\text{ mm}</span></td></tr></tbody></table><hr><h2>5. Subsystem Mechanical Schematics</h2><h3>A. Vertical Lift Carriage Drive</h3><p>The vertical carriage moves on twin HGR25 linear rails and is driven by the central SFU2505 ball screw:</p><div class='img-container'><img src='vertical_carriage.png' alt='Vertical Lift Carriage Assembly Schematic Diagram (Illustrative Schematic / Non-Realistic)' class='report-image' /><div class='img-caption'>Vertical Lift Carriage Assembly Schematic Diagram (Illustrative Schematic / Non-Realistic)</div></div><h3>B. Folding Load Roller Kinematics</h3><p>For standard E10 models, the front tandem load rollers retract inside the fork cavity when lowered, and deploy down to touch the floor when raised:</p><div class='img-container'><img src='folding_wheel.png' alt='Folding Load Roller Mechanism Schematic Diagram (Illustrative Schematic / Non-Realistic)' class='report-image' /><div class='img-caption'>Folding Load Roller Mechanism Schematic Diagram (Illustrative Schematic / Non-Realistic)</div></div><hr><h2>6. General CAD Modeling Guidelines & Tolerances</h2><p>1. <strong>Standard Machining Tolerances (ISO 2768-m):</strong></p><ul><li><span class="math">0 - 6\text{ mm}</span>: <span class="math">\pm 0.1\text{ mm}</span></li><li><span class="math">6 - 30\text{ mm}</span>: <span class="math">\pm 0.2\text{ mm}</span></li><li><span class="math">30 - 120\text{ mm}</span>: <span class="math">\pm 0.3\text{ mm}</span></li><li><span class="math">120 - 400\text{ mm}</span>: <span class="math">\pm 0.5\text{ mm}</span></li><li><span class="math">400 - 1000\text{ mm}</span>: <span class="math">\pm 0.8\text{ mm}</span></li><li><span class="math">1000 - 2000\text{ mm}</span>: <span class="math">\pm 1.0\text{ mm}</span></li></ul><p>2. <strong>Weldment Notes:</strong></p><ul><li>All structural tube joints require <strong><span class="math">6\text{ mm}</span> continuous fillet welds</strong> (MIG process, ER70S-6 filler wire).</li><li>All sharp edges and corners must be deburred with <span class="math">R1 - R2\text{ mm}</span> radii.</li></ul><p>3. <strong>Surface Finish:</strong></p><ul><li>Industrial powder coating (Orange RAL 2004 / Dark Grey RAL 7016), dry film thickness <span class="math">80 - 100\,\mu\text{m}</span>.</li>
+    </div>
+</body>
+</html>
