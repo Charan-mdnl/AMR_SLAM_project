@@ -711,4 +711,14 @@ if __name__ == "__main__":
         "/home/charan/.gemini/antigravity-ide/scratch/tusk-amr-analysis/tusk_e_series_cad_design_guide.html",
         "Tusk Robots E-Series CAD Design & Dimensioning Guide"
     )
+    build_report_html(
+        "/home/charan/.gemini/antigravity-ide/scratch/tusk-amr-analysis/tusk_e10_titan_cad_design_guide.md",
+        "/home/charan/.gemini/antigravity-ide/scratch/tusk-amr-analysis/tusk_e10_titan_cad_design_guide.html",
+        "Tusk Robots E10 (Titan) CAD Design & Dimensioning Guide"
+    )
+    build_report_html(
+        "/home/charan/.gemini/antigravity-ide/scratch/tusk-amr-analysis/custom_sheetmetal_amr_design_guide.md",
+        "/home/charan/.gemini/antigravity-ide/scratch/tusk-amr-analysis/custom_sheetmetal_amr_design_guide.html",
+        "Custom 1000x1200mm Sheet Metal AMR CAD Design Guide"
+    )
     excel_to_html_tabs()

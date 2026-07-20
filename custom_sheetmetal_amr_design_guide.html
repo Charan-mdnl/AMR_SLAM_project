@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom 1000x1200mm Sheet Metal AMR CAD Design Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(30, 41, 59, 0.7);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        h1 {
+            font-size: 2.2rem;
+            color: #38bdf8;
+            border-bottom: 2px solid rgba(56, 189, 248, 0.3);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h2 {
+            font-size: 1.6rem;
+            color: #38bdf8;
+            margin-top: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 5px;
+        }
+        h3 {
+            font-size: 1.25rem;
+            color: #f1f5f9;
+            margin-top: 20px;
+        }
+        p {
+            color: #cbd5e1;
+            margin-bottom: 20px;
+        }
+        ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+            color: #cbd5e1;
+        }
+        .math {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(15, 23, 42, 0.6);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #f472b6;
+            font-size: 0.9em;
+        }
+        hr {
+            border: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 30px 0;
+        }
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid;
+        }
+        .alert-important {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: #ef4444;
+            color: #fca5a5;
+        }
+        .alert-note {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: #3b82f6;
+            color: #93c5fd;
+        }
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.95rem;
+        }
+        .report-table th, .report-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .report-table th {
+            background-color: rgba(15, 23, 42, 0.6);
+            color: #38bdf8;
+            font-weight: 500;
+        }
+        .report-table tr:hover {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+        .code-block {
+            background: #090d16;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin: 20px 0;
+        }
+        pre, code {
+            font-family: 'JetBrains Mono', monospace;
+            margin: 0;
+            color: #a7f3d0;
+        }
+        .img-container {
+            text-align: center;
+            margin: 30px 0;
+            background: rgba(15, 23, 42, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            page-break-inside: avoid;
+        }
+        .report-image {
+            max-width: 100%;
+            max-height: 550px;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .img-caption {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-top: 12px;
+            font-style: italic;
+            font-weight: 500;
+        }
+        .btn-print {
+            display: inline-block;
+            background: #0284c7;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 25px;
+            transition: background 0.2s;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+        .btn-print:hover {
+            background: #0369a1;
+        }
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 20mm 15mm 20mm 15mm;
+            }
+            body {
+                background-color: white;
+                color: black;
+                padding: 0;
+                margin: 0;
+            }
+            .container {
+                background: none;
+                box-shadow: none;
+                padding: 0;
+                border: none;
+                max-width: 100%;
+            }
+            .btn-print {
+                display: none;
+            }
+            h1, h2, h3, .report-table th {
+                color: black;
+                page-break-after: avoid;
+            }
+            p, li, td {
+                color: #222;
+            }
+            tr, li, .code-block, .img-container {
+                page-break-inside: avoid;
+            }
+            .math {
+                background: #f1f5f9;
+                color: #b91c1c;
+            }
+            .code-block {
+                background: #fafafa;
+                border: 1px solid #ddd;
+            }
+            code {
+                color: #111827;
+            }
+            .img-container {
+                background: none;
+                border: none;
+                padding: 10px 0;
+            }
+            .report-image {
+                border: 1px solid #ccc;
+            }
+            .img-caption {
+                color: #444;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="btn-print" onclick="window.print()">Print / Export as PDF</button>
+        <h1>Custom Sheet Metal Pallet AMR ($1000\text{ mm} \times 1200\text{ mm}$) - Master CAD Design & Dimensioning Guide</h1><p>This document presents a complete mechanical analysis, rough CAD part dimensions, and sheet metal fabrication guidelines for your custom <strong><span class="math">1000\text{ mm} \times 1200\text{ mm}</span> Low-Profile Pallet AMR</strong> based on the 3 hand-drawn notebook design sketches (Pages 8, 11, and 12).</p><hr><h2>1. Design Concept & Kinematic Mechanism Analysis</h2><h3>Working Principle (Based on Notebook Sketches)</h3><p>As shown in your hand-drawn sketches:</p><ul><li><strong>Notebook Page 8 (April 8):</strong> Shows the isometric top view of the <span class="math">1000\text{ mm} \times 1200\text{ mm}</span> AMR body with two parallel recessed fork channels and 10 guide follower pin positions along the track.</li><li><strong>Notebook Page 11 (April 11):</strong> Details the <strong>Variable Linear Guide Height / Z-Ramp Cam Slot Mechanism</strong> (Ramp profiles 1 through 10).</li><li><em>Why this works:</em> When the pallet forks retract inside the main chassis body, the cam follower pins ride UP the sloped Z-ramp slot. This <strong>elevates the fork carriage vertically by <span class="math">60\text{ mm}</span></strong>, lifting the pallet's bottom load wheels off the floor so the main AMR chassis can rotate and navigate freely!</li><li><strong>Notebook Page 12 (April 12):</strong> Shows the alternative scissor/pantograph linkage and the lower drive belt/wheel assembly layout.</li></ul><hr><h2>2. 3D CAD Visualization & Master Blueprint</h2><h3>A. 3D CAD Concept Render ($1000\text{ mm W} \times 1200\text{ mm L} \times 200\text{ mm H}$)</h3><p>Constructed with bended <span class="math">3.0\text{ mm}</span> steel sheet metal, side drive compartments, laser-cut cam guide slot side plates, corner casters, and two recessed fork channels:</p><div class='img-container'><img src='user_custom_sheetmetal_amr_3d.png' alt='Custom 1000mm x 1200mm Sheet Metal Pallet AMR 3D CAD Concept Render (Illustrative Schematic / Non-Realistic)' class='report-image' /><div class='img-caption'>Custom 1000mm x 1200mm Sheet Metal Pallet AMR 3D CAD Concept Render (Illustrative Schematic / Non-Realistic)</div></div><h3>B. 2D Engineering Blueprint - Variable Height Cam-Ramp Slot Mechanism</h3><p>Detailing the Z-shaped sloped cam slot track profile drawn on Notebook Page 11:</p><div class='img-container'><img src='user_cam_slot_mechanism_blueprint.png' alt='Notebook Page 11 Variable Height Cam-Ramp Guide Slot Mechanism 2D Blueprint (Illustrative Schematic / Non-Realistic)' class='report-image' /><div class='img-caption'>Notebook Page 11 Variable Height Cam-Ramp Guide Slot Mechanism 2D Blueprint (Illustrative Schematic / Non-Realistic)</div></div><hr><h2>3. Recommended Overall Height & Footprint Sizing</h2><table class='report-table'><thead><tr><th>Parameter</th><th>Recommended Dimension</th><th>Design Rationale & Clearance</th></tr></thead><tbody><tr><td><strong>Overall Width (<span class="math">W</span>)</strong></td><td><strong>1000 mm</strong></td><td>User target width</td></tr><tr><td><strong>Overall Length (<span class="math">L</span>)</strong></td><td><strong>1200 mm</strong></td><td>User target length (fits standard <span class="math">1200\text{ mm}</span> ISO / EUR pallets)</td></tr><tr><td><strong>Lowered Chassis Height (<span class="math">H_{low}</span>)</strong></td><td><strong>200 mm</strong></td><td><strong>Calculated Minimum Height:</strong> Includes <span class="math">160\text{ mm}</span> drive wheel, <span class="math">25\text{ mm}</span> ground clearance, and <span class="math">3.0\text{ mm}</span> top/bottom sheet metal deck plates</td></tr><tr><td><strong>Raised Deck Height (<span class="math">H_{raised}</span>)</strong></td><td><strong>260 mm</strong></td><td>Adds <span class="math">60\text{ mm}</span> vertical elevation travel from the cam Z-ramp</td></tr><tr><td><strong>Pallet Entry Fork Height</strong></td><td><strong>90 mm</strong></td><td>Lowered fork thickness to enter standard pallet pockets (<span class="math">100\text{ mm}</span> opening)</td></tr><tr><td><strong>Minimum Ground Clearance</strong></td><td><strong>25 mm</strong></td><td>Base sheet metal plate clearance above factory floor</td></tr></tbody></table><hr><h2>4. Rough Design Dimensions for ALL Sheet Metal Parts</h2><p>Use the dimensional table below to begin modeling individual parts and sheet metal features in your CAD software (SolidWorks, Fusion 360, or Inventor):</p><table class='report-table'><thead><tr><th>Part Name / Module</th><th>Material & Thickness</th><th>Key Dimensions (mm)</th><th>CAD Feature & Sheet Metal Notes</th></tr></thead><tbody><tr><td><strong>1. Main Outer Chassis Hull</strong></td><td><span class="math">3.0\text{ mm}</span> CRCA Mild Steel</td><td><span class="math">1000\text{ W} \times 1200\text{ L} \times 200\text{ H}</span></td><td>Outer bended enclosure with <span class="math">15\text{ mm}</span> stiffening lips and corner laser cutouts</td></tr><tr><td><strong>2. Left & Right Drive Bays</strong></td><td><span class="math">3.0\text{ mm}</span> Mild Steel Sheet</td><td><span class="math">220\text{ W} \times 1200\text{ L} \times 200\text{ H}</span></td><td>Two side compartments housing motors, 24V/48V battery, controllers, and LiDARs</td></tr><tr><td><strong>3. Recessed Fork Channels</strong></td><td><span class="math">4.0\text{ mm}</span> Mild Steel Sheet</td><td>Outer Width: <strong>560 mm</strong><br>Tyne Width: <strong>160 mm</strong><br>Inner Gap: <strong>240 mm</strong></td><td>Centered between side bays (<span class="math">220 + 160 + 240 + 160 + 220 = 1000\text{ mm}</span>). Tyne length: <span class="math">1050\text{ mm}</span></td></tr><tr><td><strong>4. Cam Guide Slot Side Plates</strong></td><td><span class="math">6.0\text{ mm}</span> Heavy Steel Plate</td><td><span class="math">1100\text{ L} \times 160\text{ H}</span> (Laser cut)</td><td><span class="math">2\times</span> side plates with CNC laser-cut <span class="math">12.2\text{ mm}</span> wide Z-shaped cam tracks</td></tr><tr><td><strong>Cam Track Breakdown:</strong></td><td></td><td></td><td></td></tr><tr><td>*-- Horizontal Entry (<span class="math">L_1</span>)*</td><td>Laser-cut Slot</td><td>Length: <strong>450 mm</strong>, Height: <span class="math">40\text{ mm}</span></td><td>Fork lowered entry position (<span class="math">90\text{ mm}</span> deck height)</td></tr><tr><td>*-- Sloped Ramp (<span class="math">L_2</span>)*</td><td><span class="math">15^\circ</span> Inclined Slot</td><td>Length: <strong>150 mm</strong>, Rise: <strong>60 mm</strong></td><td><span class="math">60\text{ mm}</span> vertical elevation ramp curve</td></tr><tr><td>*-- Elevated Hold (<span class="math">L_3</span>)*</td><td>Laser-cut Slot</td><td>Length: <strong>450 mm</strong>, Height: <span class="math">100\text{ mm}</span></td><td>Retracted raised position (<span class="math">260\text{ mm}</span> deck height)</td></tr><tr><td><strong>5. Cam Follower Bearings</strong></td><td>Stud-Type Bearings (CF12)</td><td><span class="math">\varnothing 30\text{ mm}</span> Outer, <span class="math">\varnothing 12\text{ mm}</span> Stud</td><td><span class="math">4\times</span> Heavy-duty stud cam followers mounted to inner fork carriage</td></tr><tr><td><strong>6. Inner Lifting Fork Carriage</strong></td><td><span class="math">4.0\text{ mm}</span> Steel Sheet Weldment</td><td><span class="math">550\text{ W} \times 950\text{ L} \times 120\text{ H}</span></td><td>Bent U-frame carrying the top tynes with tab-and-slot welding alignment notches</td></tr><tr><td><strong>7. Drive Wheels (Differential)</strong></td><td>Polyurethane on Aluminum</td><td><span class="math">\varnothing 160\text{ mm} \times 50\text{ mm}</span> Width</td><td><span class="math">2\times</span> Center differential drive wheels (<span class="math">\varnothing 25\text{ mm}</span> shaft bore)</td></tr><tr><td><strong>8. Corner Swivel Casters</strong></td><td>Polyurethane Casters</td><td><span class="math">\varnothing 75\text{ mm}</span> Wheel Dia</td><td><span class="math">4\times</span> Corner swivel casters (<span class="math">100\text{ mm}</span> total mounting height)</td></tr><tr><td><strong>9. Drive Motors & Gearbox</strong></td><td>BLDC Servo Motors</td><td>750W 24V (1:20 Planetary)</td><td><span class="math">2\times</span> Motors mounted inside the <span class="math">220\text{ mm}</span> side bays</td></tr></tbody></table><hr><h2>5. Sheet Metal Fabrication Guidelines for CAD Modeling</h2><p>1. <strong>Bending Parameters:</strong></p><ul><li>Sheet Thickness <span class="math">t = 3.0\text{ mm}</span> <span class="math">\rightarrow</span> Internal Bend Radius <span class="math">R = 3.0\text{ mm}</span> (<span class="math">K\text{-factor} = 0.44</span>).</li><li>Sheet Thickness <span class="math">t = 4.0\text{ mm}</span> <span class="math">\rightarrow</span> Internal Bend Radius <span class="math">R = 4.0\text{ mm}</span> (<span class="math">K\text{-factor} = 0.44</span>).</li></ul><p>2. <strong>Bend Reliefs:</strong></p><ul><li>Add rectangular or teardrop bend relief cuts (<span class="math">\text{Width} = 4.0\text{ mm}</span>, <span class="math">\text{Depth} = 5.0\text{ mm}</span>) at all flange intersections to prevent metal tearing during press brake bending.</li></ul><p>3. <strong>Tab-and-Slot Alignment Notches:</strong></p><ul><li>Incorporate laser-cut <span class="math">15\text{ mm} \times 4\text{ mm}</span> tabs and matching slots on internal structural bulkheads. This allows the sheet metal pieces to self-align during assembly before plug welding.</li></ul><p>4. <strong>Cam Track Surface Hardening:</strong></p><ul><li>The <span class="math">6.0\text{ mm}</span> laser-cut cam slot side plates should be case-hardened (nitrided or induction hardened) to prevent localized indentation from the <span class="math">\varnothing 30\text{ mm}</span> steel cam followers under a <span class="math">1000\text{ kg}</span> payload.</li>
+    </div>
+</body>
+</html>
