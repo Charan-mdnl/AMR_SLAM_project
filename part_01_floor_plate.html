@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 1200px;
+            height: 900px;
+        }
+        .blueprint-container {
+            width: 1160px;
+            height: 860px;
+            border: 3px solid #38bdf8;
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+            box-sizing: border-box;
+            position: relative;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+        }
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="blueprint-container">
+        
+<svg viewBox="0 0 1120 820" xmlns="http://www.w3.org/2000/svg">
+    <!-- Grid pattern -->
+    <defs>
+        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#334155" stroke-width="0.5"/>
+        </pattern>
+    </defs>
+    <rect width="1120" height="820" fill="url(#grid)"/>
+
+    <!-- TITLE & HEADER -->
+    <text x="30" y="40" fill="#38bdf8" font-size="22" font-weight="bold">DETAILED PART DRAWING: PART 01 - CHASSIS FLOOR BASE PLATE (SM-001)</text>
+    <text x="30" y="65" fill="#94a3b8" font-size="14">MATERIAL: CRCA STEEL (6.0 mm) | ALL DIMENSIONS IN MILLIMETERS (mm) | SCALE 1:10</text>
+
+    <!-- TOP PLAN VIEW -->
+    <g transform="translate(160, 120)">
+        <text x="400" y="-20" fill="#38bdf8" font-size="16" text-anchor="middle" font-weight="bold">TOP PLAN VIEW (1200 mm x 1000 mm)</text>
+        
+        <!-- Main Plate Chamfered Contour -->
+        <polygon points="40,0 760,0 800,40 800,620 760,660 40,660 0,620 0,40" fill="none" stroke="#f8fafc" stroke-width="3"/>
+        
+        <!-- Corner Chamfer Annotations -->
+        <text x="770" y="25" fill="#f59e0b" font-size="11">40x45°</text>
+        
+        <!-- Center Cutout -->
+        <rect x="250" y="230" width="300" height="200" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6,4"/>
+        <text x="400" y="335" fill="#94a3b8" font-size="13" text-anchor="middle">CENTER CLEARANCE CUTOUT (300 x 200 mm)</text>
+
+        <!-- Left Drive Wheel Cutout -->
+        <rect x="60" y="260" width="140" height="140" fill="#0f172a" stroke="#ef4444" stroke-width="2"/>
+        <text x="130" y="335" fill="#ef4444" font-size="11" text-anchor="middle">DRIVE WHEEL (L)<br/>220x70 mm</text>
+
+        <!-- Right Drive Wheel Cutout -->
+        <rect x="600" y="260" width="140" height="140" fill="#0f172a" stroke="#ef4444" stroke-width="2"/>
+        <text x="670" y="335" fill="#ef4444" font-size="11" text-anchor="middle">DRIVE WHEEL (R)<br/>220x70 mm</text>
+
+        <!-- Corner Caster Mount Holes (4 Places) -->
+        <circle cx="50" cy="50" r="12" fill="none" stroke="#38bdf8" stroke-width="2"/>
+        <circle cx="750" cy="50" r="12" fill="none" stroke="#38bdf8" stroke-width="2"/>
+        <circle cx="50" cy="610" r="12" fill="none" stroke="#38bdf8" stroke-width="2"/>
+        <circle cx="750" cy="610" r="12" fill="none" stroke="#38bdf8" stroke-width="2"/>
+        <text x="50" y="30" fill="#38bdf8" font-size="10" text-anchor="middle">4x Ø9 THRU</text>
+
+        <!-- Stepped Rail Mounting Hole Lines -->
+        <line x1="150" y1="40" x2="150" y2="620" stroke="#4ade80" stroke-width="2" stroke-dasharray="8,4"/>
+        <line x1="650" y1="40" x2="650" y2="620" stroke="#4ade80" stroke-width="2" stroke-dasharray="8,4"/>
+        <text x="150" y="20" fill="#4ade80" font-size="11" text-anchor="middle">STEPPED RAIL MOUNT LINE (L)</text>
+        <text x="650" y="20" fill="#4ade80" font-size="11" text-anchor="middle">STEPPED RAIL MOUNT LINE (R)</text>
+
+        <!-- Dimensions -->
+        <!-- Length 1200mm -->
+        <line x1="0" y1="-35" x2="800" y2="-35" stroke="#f8fafc" stroke-width="1.5"/>
+        <line x1="0" y1="-45" x2="0" y2="-25" stroke="#f8fafc" stroke-width="1.5"/>
+        <line x1="800" y1="-45" x2="800" y2="-25" stroke="#f8fafc" stroke-width="1.5"/>
+        <text x="400" y="-42" fill="#f8fafc" font-size="14" font-weight="bold" text-anchor="middle">1200.0 mm (LENGTH)</text>
+
+        <!-- Width 1000mm -->
+        <line x1="-35" y1="0" x2="-35" y2="660" stroke="#f8fafc" stroke-width="1.5"/>
+        <line x1="-45" y1="0" x2="-25" y2="0" stroke="#f8fafc" stroke-width="1.5"/>
+        <line x1="-45" y1="660" x2="-25" y2="660" stroke="#f8fafc" stroke-width="1.5"/>
+        <text x="-45" y="330" fill="#f8fafc" font-size="14" font-weight="bold" text-anchor="middle" transform="rotate(-90 -45 330)">1000.0 mm (WIDTH)</text>
+
+        <!-- Rail Spacing 800mm -->
+        <line x1="150" y1="685" x2="650" y2="685" stroke="#4ade80" stroke-width="1.5"/>
+        <text x="400" y="700" fill="#4ade80" font-size="12" text-anchor="middle">800.0 mm (RAIL SPACING C-C)</text>
+    </g>
+
+    <!-- TITLE BLOCK -->
+    <g transform="translate(750, 680)">
+        <rect width="340" height="110" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+        <line x1="0" y1="35" x2="340" y2="35" stroke="#38bdf8" stroke-width="1"/>
+        <line x1="0" y1="70" x2="340" y2="70" stroke="#38bdf8" stroke-width="1"/>
+        <text x="10" y="25" fill="#f8fafc" font-size="14" font-weight="bold">TUSK E10 TITAN AMR - PART 01</text>
+        <text x="10" y="58" fill="#94a3b8" font-size="12">DWG NO: SM-001 | REV: 3.0</text>
+        <text x="10" y="93" fill="#94a3b8" font-size="12">SHEET METAL: 6.0 mm CRCA STEEL</text>
+    </g>
+</svg>
+
+    </div>
+</body>
+</html>
